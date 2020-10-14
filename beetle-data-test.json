@@ -1,0 +1,140 @@
+beetledata = {
+    
+    "order-Coleoptera": {
+        "suborder-Protocoleoptera": {
+            "infraorder-None": {
+                "clade-None": {
+                    "superfamily-Tshekardocoleoidea": ["Tshekardocoleidae", "Labradorocoleidae", "Oborocoleidae"],
+                    "superfamily-Permocupedoidea": ["Permocupedidae", "Taldycupedida", "Ademosynidae", "Permosynidae"]
+                }
+            }
+        },
+        "suborder-Archostemata": {
+            "infraorder-None": {
+                "clade-None": {
+                    "superfamily-None": ["Crowsoniellidae", "Cupedidae", "Micromalthidae", "Ommatidae", "Jurodidae", "Triadocupedidae", "Magnocoleidae", "Obrieniidae"]
+                }
+            }
+        },
+        "suborder-Myxophaga": {
+            "infraorder-None": {
+                "clade-None": {
+                    "superfamily-Asiocoleoidea": ["Asiocoleidae", "Tricoleidae"],
+                    "superfamily-Rhombocoleoidea": ["Rhombocoleidae"],
+                    "superfamily-Schizophoroidea": ["Schizophoridae", "Catiniidae", "Schizocoleidae"],
+                    "superfamily-Lepiceroidea": ["Lepiceridae"],
+                    "superfamily-Sphaeriusoidea": ["Torridincolidae", "Hydroscaphidae", "Sphaeriusidae"],
+                }
+            }
+        },
+        "suborder-Adephaga": {
+            "infraorder-None": {
+                "clade-None": {
+                    "superfamily-None": ["Tritarsidae", "Gyrinidae", "Trachypachidae", "Rhysodidae", "Carabidae", "Haliplidae", "Triaplidae", "Colymbotethidae", "Parahygrobiidae", "Coptoclavidae", "Liadytidae", "Meruidae", "Noteridae", "Amphizoidae", "Aspidytidae", "Hygrobiidae", "Dytiscidae"]
+                }
+            }
+        },
+        "suborder-Polyphaga": {
+            "infraorder-Staphyliniformia": {
+                "clade-None": {
+                    "superfamily-Hydrophiloidea": ["Hydrophilidae", "Sphaeritidae", "Synteliidae", "Histeridae"],
+                    "superfamily-Staphylinoidea": ["Hydraenidae", "Ptiliidae", "Agyrtidae", "Leiodidae", "Silphidae", "Staphylinidae"]
+                }
+            },
+            "infraorder-Scarabaeiformia": {
+                "clade-None": {
+                    "superfamily-Scarabaeoidea": ["Pleocomidae", "Geotrupidae", "Belohinidae", "Passalidae", "Trogidae", "Glaresidae", "Diphyllostomatidae", "Lucanidae", "Ochodaeidae", "Hybosoridae", "Glaphyridae", "Scarabaeidae", "Coprinisphaeridae", "Pallichnidae"],
+                }
+            },
+            "infraorder-Elateriformia": {
+                "clade-None": {
+                    "superfamily-Scirtoidea": ["Pleocomidae", "Geotrupidae", "Belohinidae", "Passalidae", "Trogidae", "Glaresidae", "Diphyllostomatidae", "Lucanidae", "Ochodaeidae", "Hybosoridae", "Glaphyridae", "Scarabaeidae", "Coprinisphaeridae", "Pallichnidae"],
+                    "superfamily-Dascilloidea": ["Dascillidae", "Rhipiceridae"],
+                    "superfamily-Buprestoidea": ["Schizopodidae", "Buprestidae"],
+                    "superfamily-Byrrhoidea": ["Byrrhidae", "Elmidae", "Dryopidae", "Lutrochidae", "Limnichidae", "Heteroceridae", "Psephenidae", "Cneoglossidae", "Ptilodactylidae", "Podabrocephalidae", "Chelonariidae", "Eulichadidae", "Callirhipidae"],
+                    "superfamily-Elateroidea": ["Artematopodidae", "Brachypsectridae", "Cantharidae", "Cerophytidae", "Elateridae", "Eucnemidae", "Lampyridae", "Lycidae", "Omethidae", "Phengodidae", "Rhagophthalmidae", "Sinopyrophoridae", "Throscidae", "Berendtimiridae", "Praelateriidae"],
+                    "superfamily-Rhinorhipoidea": ["Rhinorhipidae"]
+                }
+            },
+            "infraorder-Bostrichiformia": {
+                "clade-None": {
+                    "superfamily-Derodontoidea": ["Derodontidae", "Nosodendridae", "Jacobsoniidae"],
+                    "superfamily-Bostrichoidea": ["Dermestidae", "Endecatomidae", "Bostrichidae", "Ptinidae"]
+                }
+            },
+            "infraorder-Cucujiformia": {
+                "clade-None": {
+                    "superfamily-Lymexyloidea": ["Lymexylidae"],
+                    "superfamily-Cleroidea": ["Phloiophilidae", "Trogossitidae", "Chaetosomatidae", "Metaxinidae", "Thanerocleridae", "Cleridae", "Acanthocnemidae", "Phycosecidae", "Prionoceridae", "Mauroniscidae", "Melyridae"],
+                    "superfamily-Cucujoidea": ["Parandrexidae", "Sinisilvanidae", "Boganiidae", "Byturidae", "Helotidae", "Protocucujidae", "Sphindidae", "Biphyllidae", "Erotylidae", "Monotomidae", "Hobartiidae", "Cryptophagidae", "Agapythidae", "Priasilphidae", "Phloeostichidae", "Silvanidae", "Cucujidae", "Myraboliidae", "Cavognathidae", "Lamingtoniidae", "Passandridae", "Phalacridae", "Propalticidae", "Laemophloeidae", "Tasmosalpingidae", "Cyclaxyridae", "Kateretidae", "Nitidulidae", "Smicripidae", "Bothrideridae", "Cerylonidae", "Alexiidae", "Discolomatidae", "Endomychidae", "Coccinellidae", "Corylophidae", "Akalyptoischiidae", "Latridiidae"],
+                    "superfamily-Tenebrionoidea": ["Mycetophagidae", "Archeocrypticidae", "Pterogeniidae", "Ciidae", "Tetratomidae", "Melandryidae", "Mordellidae", "Ripiphoridae", "Zopheridae", "Ulodidae", "Promecheilidae", "Chalcodryidae", "Trachelostenidae", "Tenebrionidae", "Prostomidae", "Synchroidae", "Stenotrachelidae", "Oedemeridae", "Meloidae", "Mycteridae", "Boridae", "Trictenotomidae", "Pythidae", "Pyrochroidae", "Salpingidae", "Anthicidae", "Aderidae", "Scraptiidae"]
+                },
+                "clade-Phytophaga": {
+                    "superfamily-Chrysomeloidea": ["Oxypeltidae", "Vesperidae", "Disteniidae", "Cerambycidae", "Megalopodidae", "Orsodacnidae", "Chrysomelidae"],
+                    "superfamily-Curculionoidea": ["Nemonychidae", "Anthribidae", "Ulyanidae", "Belidae", "Caridae", "Attelabidae", "Brentidae", "Dryophthoridae", "Brachyceridae", "Curculionidae"]
+                }
+            }
+        }
+    }
+    
+}
+
+// OPERATIONS:
+
+document.write(Object.keys(beetledata['order-Coleoptera']).length);
+// returns length 5, proper way to get number of items uses both object.keys and .length
+
+document.write(Object.keys(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']));
+// returns superfamily-Tshekardocoleoidea,superfamily-Permocupedoidea (keys inside clade)
+
+document.write(Object.keys(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']['superfamily-Tshekardocoleoidea']));
+// returns 0,1,2 ('keys' are the positions in the species list)
+
+document.write(Object.keys(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None'])[0]); // returns superfamily-Tshekardocoleoidea in string format
+// returns first key, superfamily-Tshekardocoleoidea in string format (doesn't work with families?)
+
+document.write(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']['superfamily-Tshekardocoleoidea'][0]);
+// returns the first family Tshekardocoleidae
+// if type is familylist then remomve Object.keys?
+
+
+// ALTERNATE METHOD: also does not work with families?? bruh... prob better to use above method
+// OR: rename all families to objects themselves? :'^D
+
+var templist = []
+var count = 0;
+var subject = beetledata['order-Coleoptera']
+for (var k in subject) if (subject.hasOwnProperty(k)) ++count, templist.push(k);
+document.write(count + ' -- ') // returns length 5
+document.write(templist.length) // returns length 5 (probably better this way)
+document.write(templist) // returns the names within object, type=object
+document.write(Object.keys(templist)) // returns keys 0,1,2,3,4
+document.write(templist["0"]) // returns item with key 0 (first item)
+
+document.write(Object.keys(subject)) // gets group names for groups>family and numbers 0,1,2 for families
+document.write(Object.values(subject)) // gets families from superfamily, gets all families from clade, doesn't work past that
+
+// for loop to go through the items in a group and add them to a temporary array?
+// recursive function to go deeper and deeper into groups and see total number of families?
+
+// WHAT YOU NEED:
+// names of the groups in any given group
+// total number of families in any given group
+// for each group circle: size based on number of families, print name over it
+
+// DATA TYPES:
+// smallest array of families is actually an object {firstName:"John", lastName:"Doe", age:46} that uses numbered keys, ex: for alt method, find 2nd array value with templist[1]
+// each item within the object is a string
+
+// EXAMPLE RECURSIVE FUNCTION:
+/*
+function pow(x, n) {
+  if (n == 1) {
+    return x;
+  } else {
+    return x * pow(x, n - 1);
+  }
+}
+document.write( pow(2, 3) );
+*/
+

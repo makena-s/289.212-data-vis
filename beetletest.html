@@ -1,0 +1,171 @@
+<!-- for more, check out https://github.com/CodingTrain/p5-matter -->
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>beetle test</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+        <link rel="stylesheet" href="stylesheet.css">
+    </head>
+
+    <body>
+
+        <h1 id="h1Button" class="unselectable">beetle test</h1>
+        <button id="addCube">add cube</button>
+        <button id="bumpCube">bump cube</button>
+        <br/>
+
+        <script>
+            // module aliases
+            let Engine = Matter.Engine;
+            // let Render = Matter.Render;
+            let World = Matter.World;
+            let Bodies = Matter.Bodies;
+
+            let engine, boxes, ground, circles;
+
+            function setup() {
+                // setup
+                canvaswidth = 600;
+                canvasheight = 600;
+                background(0);
+                createCanvas(canvaswidth, canvasheight);
+                strokeWeight(0);
+
+                // create an engine
+                engine = Engine.create();
+
+                // create ground and shapes
+                ground = [
+                    Bodies.rectangle(canvaswidth/2, -25, canvaswidth, 50, {isStatic:true}),
+                    Bodies.rectangle(canvaswidth/2, canvasheight+25, canvaswidth, 50, {isStatic:true}),
+                    Bodies.rectangle(-25, canvasheight/2, 50, canvasheight, {isStatic:true}),
+                    Bodies.rectangle(canvaswidth+25, canvasheight/2, 50, canvasheight, {isStatic:true})
+                ]
+
+                boxes = [
+                    Bodies.rectangle(400, 200, 80, 80),
+                    Bodies.rectangle(450, 50, 80, 80)
+                ]
+                
+                circles = [
+                    Bodies.circle(100,100,40),
+                    Bodies.circle(100,300,40)
+                ]
+
+                // add all of the bodies to the world
+                World.add(
+                    engine.world, [
+                        boxes[0],
+                        boxes[1],
+                        circles[0],
+                        circles[1],
+                        ground[0],
+                        ground[1],
+                        ground[2],
+                        ground[3]
+                    ]
+                );
+
+                // run the engine
+                Engine.run(engine)
+            }
+
+            function draw() {
+                background(0);
+                
+                fill(255,255,255);
+                writing = 'egg salad sandwich babyyyy';
+                // from text.html
+                var drawing = document.getElementById("defaultCanvas0");
+                var con = drawing.getContext("2d");
+                // clear background
+                // con.fillStyle = "white";
+                // con.fillRect(0, 0, 200, 200);
+                // draw font in red
+                // con.fillStyle = "red";
+                con.font = "15pt sans-serif";
+                con.fillText(writing, 20, 60);
+                // con.strokeText(writing, 20, 60);
+                
+
+                // all circles
+                for (let i=0; i<circles.length; i++){
+                    fill(100,100,255);
+                    shapevertices = circles[i].vertices;
+                    center = circles[i].vertices.centre;
+                    beginShape();
+                    for (let j=0; j<shapevertices.length; j++) {
+                        vertex(shapevertices[j].x, shapevertices[j].y);
+                    }
+                    endShape(CLOSE);
+                    
+                    // point and text 
+                    fill(255,255,255);
+                    
+                    ellipse(shapevertices[0]['x'], shapevertices[0]['y'],10, 10);
+                    
+                    //ellipse(center['x'], center['y'],10, 10);
+                    
+                    con.fillText('YEEHAW', shapevertices[0]['x']+10, shapevertices[0]['y']);
+                }
+                //print(Object.keys(shapevertices[0]['x']).length)
+
+                // all boxes
+                for (let h=0; h<boxes.length; h++){
+                    shapevertices = boxes[h].vertices;
+                    if(h==0){
+                        fill(200)
+                    }else{
+                        fill(100);
+                    }
+                    beginShape();
+                    for (let i=0; i<shapevertices.length; i++) {
+                        vertex(shapevertices[i].x, shapevertices[i].y);
+                    }
+                    endShape(CLOSE);
+                }
+
+                // ground vertices
+                for (let i=0; i<ground.length; i++){
+                    shapevertices = ground[i].vertices;
+                    beginShape();
+                    fill(127);
+                    for (let j=0; j<shapevertices.length; j++) {
+                        vertex(shapevertices[j].x, shapevertices[j].y);
+                    }
+                    endShape(CLOSE);
+                }
+                
+            }
+
+            // add cube button
+            document.getElementById('addCube').addEventListener('click', () => {
+                circles.push(Bodies.circle(500,100,40));
+                World.add(engine.world, circles[circles.length-1]);
+                print('circle add')
+            })
+
+            // bump cube button
+            document.getElementById('bumpCube').addEventListener('click', () => {
+                // Matter.Body.applyForce(boxes[0], {x:boxes[0].position.x-5, y:boxes[0].position.y}, {x:0, y:-0.3});
+                for (let i=0; i<boxes.length; i++){
+                    Matter.Body.applyForce(boxes[i], {x:boxes[i].position.x-5, y:boxes[i].position.y}, {x:0, y:-0.3});
+                }
+                for (let j=0; j<circles.length; j++){
+                    Matter.Body.applyForce(circles[j], {x:circles[j].position.x-5, y:circles[j].position.y}, {x:0, y:-0.3});
+                }
+            })
+
+            // bump cube button
+            document.getElementById('h1Button').addEventListener('click', () => {
+                print('header clicked')
+            })
+
+        </script>
+
+    </body>
+</html>
