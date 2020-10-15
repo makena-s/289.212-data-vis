@@ -79,6 +79,8 @@ beetledata = {
     
 }
 
+// RETRY ALL OPERATIONS WITH CONSOLE.LOG INSTEAD.........
+
 // OPERATIONS:
 
 document.write(Object.keys(beetledata['order-Coleoptera']).length);
@@ -86,6 +88,7 @@ document.write(Object.keys(beetledata['order-Coleoptera']).length);
 
 document.write(Object.keys(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']));
 // returns superfamily-Tshekardocoleoidea,superfamily-Permocupedoidea (keys inside clade)
+// note: the array has brackets, just doesn't show up in document.write, use console.log instead
 
 document.write(Object.keys(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']['superfamily-Tshekardocoleoidea']));
 // returns 0,1,2 ('keys' are the positions in the species list)
@@ -113,6 +116,7 @@ document.write(templist["0"]) // returns item with key 0 (first item)
 
 document.write(Object.keys(subject)) // gets group names for groups>family and numbers 0,1,2 for families
 document.write(Object.values(subject)) // gets families from superfamily, gets all families from clade, doesn't work past that
+document.write(Object.entries(subject)) // gets families from superfamily, gets all families from clade, doesn't work past that
 
 // for loop to go through the items in a group and add them to a temporary array?
 // recursive function to go deeper and deeper into groups and see total number of families?

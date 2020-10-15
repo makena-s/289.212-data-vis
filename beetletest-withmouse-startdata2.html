@@ -1,0 +1,282 @@
+<!-- for more, check out https://github.com/CodingTrain/p5-matter -->
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>beetle test</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+        <link rel="stylesheet" href="stylesheet.css">
+    </head>
+
+    <body>
+
+        <h1 id="h1Button" class="unselectable">beetle test</h1>
+        <button id="addCube">add circle</button>
+        <button id="bumpCube">bump circle</button>
+
+        <br>
+
+        <p id="demo">Click me.</p>
+        <img hidden src="scarabsmall.png" id="scarabicon" width="50">
+
+        <script>
+            // module aliases
+            let Engine = Matter.Engine;
+            // let Render = Matter.Render;
+            let World = Matter.World;
+            let Bodies = Matter.Bodies;
+            Constraint = Matter.Constraint,
+                Mouse = Matter.Mouse,
+                MouseConstraint = Matter.MouseConstraint;
+
+            let engine, boxes, ground, circles, world;
+
+            var mConstraint;
+
+            // BEETLEDATA JSON COPIED HERE
+            beetledata = {
+
+                "order-Coleoptera": {
+                    "suborder-Protocoleoptera": {
+                        "infraorder-None": {
+                            "clade-None": {
+                                "superfamily-Tshekardocoleoidea": ["Tshekardocoleidae", "Labradorocoleidae", "Oborocoleidae"],
+                                "superfamily-Permocupedoidea": ["Permocupedidae", "Taldycupedida", "Ademosynidae", "Permosynidae"]
+                            }
+                        }
+                    },
+                    "suborder-Archostemata": {
+                        "infraorder-None": {
+                            "clade-None": {
+                                "superfamily-None": ["Crowsoniellidae", "Cupedidae", "Micromalthidae", "Ommatidae", "Jurodidae", "Triadocupedidae", "Magnocoleidae", "Obrieniidae"]
+                            }
+                        }
+                    },
+                    "suborder-Myxophaga": {
+                        "infraorder-None": {
+                            "clade-None": {
+                                "superfamily-Asiocoleoidea": ["Asiocoleidae", "Tricoleidae"],
+                                "superfamily-Rhombocoleoidea": ["Rhombocoleidae"],
+                                "superfamily-Schizophoroidea": ["Schizophoridae", "Catiniidae", "Schizocoleidae"],
+                                "superfamily-Lepiceroidea": ["Lepiceridae"],
+                                "superfamily-Sphaeriusoidea": ["Torridincolidae", "Hydroscaphidae", "Sphaeriusidae"],
+                            }
+                        }
+                    },
+                    "suborder-Adephaga": {
+                        "infraorder-None": {
+                            "clade-None": {
+                                "superfamily-None": ["Tritarsidae", "Gyrinidae", "Trachypachidae", "Rhysodidae", "Carabidae", "Haliplidae", "Triaplidae", "Colymbotethidae", "Parahygrobiidae", "Coptoclavidae", "Liadytidae", "Meruidae", "Noteridae", "Amphizoidae", "Aspidytidae", "Hygrobiidae", "Dytiscidae"]
+                            }
+                        }
+                    },
+                    "suborder-Polyphaga": {
+                        "infraorder-Staphyliniformia": {
+                            "clade-None": {
+                                "superfamily-Hydrophiloidea": ["Hydrophilidae", "Sphaeritidae", "Synteliidae", "Histeridae"],
+                                "superfamily-Staphylinoidea": ["Hydraenidae", "Ptiliidae", "Agyrtidae", "Leiodidae", "Silphidae", "Staphylinidae"]
+                            }
+                        },
+                        "infraorder-Scarabaeiformia": {
+                            "clade-None": {
+                                "superfamily-Scarabaeoidea": ["Pleocomidae", "Geotrupidae", "Belohinidae", "Passalidae", "Trogidae", "Glaresidae", "Diphyllostomatidae", "Lucanidae", "Ochodaeidae", "Hybosoridae", "Glaphyridae", "Scarabaeidae", "Coprinisphaeridae", "Pallichnidae"],
+                            }
+                        },
+                        "infraorder-Elateriformia": {
+                            "clade-None": {
+                                "superfamily-Scirtoidea": ["Pleocomidae", "Geotrupidae", "Belohinidae", "Passalidae", "Trogidae", "Glaresidae", "Diphyllostomatidae", "Lucanidae", "Ochodaeidae", "Hybosoridae", "Glaphyridae", "Scarabaeidae", "Coprinisphaeridae", "Pallichnidae"],
+                                "superfamily-Dascilloidea": ["Dascillidae", "Rhipiceridae"],
+                                "superfamily-Buprestoidea": ["Schizopodidae", "Buprestidae"],
+                                "superfamily-Byrrhoidea": ["Byrrhidae", "Elmidae", "Dryopidae", "Lutrochidae", "Limnichidae", "Heteroceridae", "Psephenidae", "Cneoglossidae", "Ptilodactylidae", "Podabrocephalidae", "Chelonariidae", "Eulichadidae", "Callirhipidae"],
+                                "superfamily-Elateroidea": ["Artematopodidae", "Brachypsectridae", "Cantharidae", "Cerophytidae", "Elateridae", "Eucnemidae", "Lampyridae", "Lycidae", "Omethidae", "Phengodidae", "Rhagophthalmidae", "Sinopyrophoridae", "Throscidae", "Berendtimiridae", "Praelateriidae"],
+                                "superfamily-Rhinorhipoidea": ["Rhinorhipidae"]
+                            }
+                        },
+                        "infraorder-Bostrichiformia": {
+                            "clade-None": {
+                                "superfamily-Derodontoidea": ["Derodontidae", "Nosodendridae", "Jacobsoniidae"],
+                                "superfamily-Bostrichoidea": ["Dermestidae", "Endecatomidae", "Bostrichidae", "Ptinidae"]
+                            }
+                        },
+                        "infraorder-Cucujiformia": {
+                            "clade-None": {
+                                "superfamily-Lymexyloidea": ["Lymexylidae"],
+                                "superfamily-Cleroidea": ["Phloiophilidae", "Trogossitidae", "Chaetosomatidae", "Metaxinidae", "Thanerocleridae", "Cleridae", "Acanthocnemidae", "Phycosecidae", "Prionoceridae", "Mauroniscidae", "Melyridae"],
+                                "superfamily-Cucujoidea": ["Parandrexidae", "Sinisilvanidae", "Boganiidae", "Byturidae", "Helotidae", "Protocucujidae", "Sphindidae", "Biphyllidae", "Erotylidae", "Monotomidae", "Hobartiidae", "Cryptophagidae", "Agapythidae", "Priasilphidae", "Phloeostichidae", "Silvanidae", "Cucujidae", "Myraboliidae", "Cavognathidae", "Lamingtoniidae", "Passandridae", "Phalacridae", "Propalticidae", "Laemophloeidae", "Tasmosalpingidae", "Cyclaxyridae", "Kateretidae", "Nitidulidae", "Smicripidae", "Bothrideridae", "Cerylonidae", "Alexiidae", "Discolomatidae", "Endomychidae", "Coccinellidae", "Corylophidae", "Akalyptoischiidae", "Latridiidae"],
+                                "superfamily-Tenebrionoidea": ["Mycetophagidae", "Archeocrypticidae", "Pterogeniidae", "Ciidae", "Tetratomidae", "Melandryidae", "Mordellidae", "Ripiphoridae", "Zopheridae", "Ulodidae", "Promecheilidae", "Chalcodryidae", "Trachelostenidae", "Tenebrionidae", "Prostomidae", "Synchroidae", "Stenotrachelidae", "Oedemeridae", "Meloidae", "Mycteridae", "Boridae", "Trictenotomidae", "Pythidae", "Pyrochroidae", "Salpingidae", "Anthicidae", "Aderidae", "Scraptiidae"]
+                            },
+                            "clade-Phytophaga": {
+                                "superfamily-Chrysomeloidea": ["Oxypeltidae", "Vesperidae", "Disteniidae", "Cerambycidae", "Megalopodidae", "Orsodacnidae", "Chrysomelidae"],
+                                "superfamily-Curculionoidea": ["Nemonychidae", "Anthribidae", "Ulyanidae", "Belidae", "Caridae", "Attelabidae", "Brentidae", "Dryophthoridae", "Brachyceridae", "Curculionidae"]
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            function setup() {
+                // setup
+                canvaswidth = screen.height/1.4;
+                canvasheight = screen.height/1.4;
+                background(0);
+                var canvas = createCanvas(canvaswidth, canvasheight);
+                //canvas.position(screen.width-(canvaswidth*1.05), (canvaswidth*.05));
+                canvas.position(canvaswidth-100, (canvaswidth*.05));
+                strokeWeight(0);
+                circlesize = 30;
+
+                // create an engine
+                engine = Engine.create();
+                world = engine.world;
+
+                // create ground and shapes
+                ground = [
+                    Bodies.rectangle(canvaswidth/2, -25, canvaswidth, 50, {isStatic:true}),
+                    Bodies.rectangle(canvaswidth/2, canvasheight+25, canvaswidth, 50, {isStatic:true}),
+                    Bodies.rectangle(-25, canvasheight/2, 50, canvasheight, {isStatic:true}),
+                    Bodies.rectangle(canvaswidth+25, canvasheight/2, 50, canvasheight, {isStatic:true})
+                ]
+
+                boxes = [
+                    Bodies.rectangle(400, 200, 50, 50),
+                ]
+
+                circles = [
+                    Bodies.circle(canvaswidth/2,100,circlesize),
+                    Bodies.circle(canvaswidth/2,300,circlesize)
+                ]
+
+                // add all of the bodies to the world
+                World.add(
+                    engine.world, [
+                        //boxes[0],
+                        circles[0],
+                        circles[1],
+                        ground[0],
+                        ground[1],
+                        ground[2],
+                        ground[3]
+                    ]
+                );
+
+                var canvasmouse = Mouse.create(canvas.elt);
+                canvasmouse.pixelRatio = pixelDensity();
+                //console.log(canvasmouse);
+                var options = {
+                    mouse: canvasmouse
+                };
+                mConstraint = MouseConstraint.create(engine, options);
+                World.add(world, mConstraint);
+                console.log(mConstraint);
+
+                // run the engine
+                Engine.run(engine)
+            }
+
+            function draw() {
+                background(0);
+                fill(255,255,255);
+
+                // title
+                writing = 'beetle groups :^)';
+                // from text.html
+                var drawing = document.getElementById("defaultCanvas0");
+                var con = drawing.getContext("2d");
+                con.font = "20pt sans-serif";
+                con.fillText(writing, 20, 40);
+                con.font = "15pt sans-serif";
+
+                // circles
+                for (let i=0; i<circles.length; i++){
+                    fill(100,100,255);
+                    shapevertices = circles[i].vertices;
+                    center = circles[i].vertices.centre;
+                    beginShape();
+                    for (let j=0; j<shapevertices.length; j++) {
+                        vertex(shapevertices[j].x, shapevertices[j].y);
+                    }
+                    endShape(CLOSE);
+                }
+
+                // circle text
+                for (let i=0; i<circles.length; i++){
+                    shapevertices = circles[i].vertices;
+                    fill(255,255,255);
+                    ellipse(shapevertices[0]['x'], shapevertices[0]['y'],10, 10);
+                    //center = circles[i].vertices.centre;
+                    //ellipse(center['x'], center.y,10, 10);
+                    con.fillText('YEEHAW', shapevertices[0]['x']+10, shapevertices[0]['y']);
+                }
+
+                // ground vertices
+                for (let i=0; i<ground.length; i++){
+                    shapevertices = ground[i].vertices;
+                    beginShape();
+                    fill(127);
+                    for (let j=0; j<shapevertices.length; j++) {
+                        vertex(shapevertices[j].x, shapevertices[j].y);
+                    }
+                    endShape(CLOSE);
+                }
+
+                // click marker
+                if (mConstraint.body) {
+                    var pos = mConstraint.body.position;
+                    var offset = mConstraint.constraint.pointB;
+                    var m = mConstraint.mouse.position;
+                    //stroke(0, 255, 0);
+                    //line(pos.x + offset.x, pos.y + offset.y, m.x, m.y);
+                    fill(0,0,255)
+                    //ellipse(pos.x + offset.x, pos.y + offset.y, 20,20)
+                    print('clicked')
+
+                    var scarabicon = document.getElementById("scarabicon");
+                    con.drawImage(scarabicon, pos.x + offset.x, pos.y + offset.y);    
+                }
+
+            } // end draw function
+
+            // add circle button
+            document.getElementById('addCube').addEventListener('click', () => {
+                circles.push(Bodies.circle(canvaswidth/2,100,circlesize));
+                World.add(engine.world, circles[circles.length-1]);
+                print('circle add')
+            })
+
+            // bump circle button
+            document.getElementById('bumpCube').addEventListener('click', () => {
+                // Matter.Body.applyForce(boxes[0], {x:boxes[0].position.x-5, y:boxes[0].position.y}, {x:0, y:-0.3});
+                for (let i=0; i<boxes.length; i++){
+                    Matter.Body.applyForce(boxes[i], {x:boxes[i].position.x-5, y:boxes[i].position.y}, {x:0, y:-0.3});
+                }
+                for (let j=0; j<circles.length; j++){
+                    Matter.Body.applyForce(circles[j], {x:circles[j].position.x-5, y:circles[j].position.y}, {x:0, y:-0.2});
+                }
+                print('circle bump')
+            })
+
+            // click header
+            document.getElementById('h1Button').addEventListener('click', () => {
+                print('header clicked')
+            })
+
+            // click start
+            document.getElementById("demo").addEventListener("mouseup", mouseUp);
+            function mouseUp() {
+                document.getElementById("demo").innerHTML = "You released the mouse button.";
+                print(beetledata);
+            }
+
+        </script>
+
+    </body>
+</html>
+
+
+
+
+

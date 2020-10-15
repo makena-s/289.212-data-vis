@@ -10,3 +10,24 @@
    -ms-user-select: none;
    user-select: none;
 }
+
+.centered {
+    text-align: center;
+    background-color: red;
+    padding: 20px;
+}
+
+body {
+    font-size: 16px;
+    color: seagreen;
+    font-family: courier;
+    font-weight: normal;
+    background-color: lightsteelblue;
+}
+
+button {
+    font-size: 16px;
+    color: orangered;
+    font-family: courier;
+    font-weight: bold;
+}

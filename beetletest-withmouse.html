@@ -24,19 +24,49 @@
             // let Render = Matter.Render;
             let World = Matter.World;
             let Bodies = Matter.Bodies;
+            Constraint = Matter.Constraint,
+                Mouse = Matter.Mouse,
+                MouseConstraint = Matter.MouseConstraint;
 
-            let engine, boxes, ground, circles;
+            let engine, boxes, ground, circles, world;
+
+            var mConstraint;
+
+            //            // start attempt at mouseup event
+            //            var MouseConstraint2 = {};
+            //            //module.exports = MouseConstraint;
+            //            var Events = (href="stylesheet.css");
+            //
+            //            MouseConstraint2._triggerEvents = function(mouseConstraint2) {
+            //                var mouse = mouseConstraint2.mouse,
+            //                    mouseEvents = mouse.sourceEvents;
+            //
+            //                if (mouseEvents.mousemove)
+            //                    Events.trigger(mouseConstraint2, 'mousemove', { mouse: mouse });
+            //
+            //                if (mouseEvents.mousedown)
+            //                    Events.trigger(mouseConstraint2, 'mousedown', { mouse: mouse });
+            //
+            //                if (mouseEvents.mouseup)
+            //                    Events.trigger(mouseConstraint2, 'mouseup', { mouse: mouse });
+            //                // reset the mouse state ready for the next step
+            //                Mouse.clearSourceEvents(mouse);
+            //            };
+            //            // end attempt
+
+
 
             function setup() {
                 // setup
                 canvaswidth = 600;
                 canvasheight = 600;
                 background(0);
-                createCanvas(canvaswidth, canvasheight);
+                var canvas = createCanvas(canvaswidth, canvasheight);
                 strokeWeight(0);
 
                 // create an engine
                 engine = Engine.create();
+                world = engine.world;
 
                 // create ground and shapes
                 ground = [
@@ -47,10 +77,10 @@
                 ]
 
                 boxes = [
-                    Bodies.rectangle(400, 200, 80, 80),
-                    Bodies.rectangle(450, 50, 80, 80)
+                    Bodies.rectangle(400, 200, 50, 50),
+                    //Bodies.rectangle(450, 50, 80, 80)
                 ]
-                
+
                 circles = [
                     Bodies.circle(100,100,40),
                     Bodies.circle(100,300,40)
@@ -59,8 +89,7 @@
                 // add all of the bodies to the world
                 World.add(
                     engine.world, [
-                        //boxes[0],
-                        //boxes[1],
+                        boxes[0],
                         circles[0],
                         circles[1],
                         ground[0],
@@ -70,13 +99,24 @@
                     ]
                 );
 
+                var canvasmouse = Mouse.create(canvas.elt);
+                canvasmouse.pixelRatio = pixelDensity();
+                //console.log(canvasmouse);
+                var options = {
+                    mouse: canvasmouse
+                };
+                mConstraint = MouseConstraint.create(engine, options);
+                World.add(world, mConstraint);
+                console.log(mConstraint);
+
                 // run the engine
                 Engine.run(engine)
             }
 
             function draw() {
                 background(0);
-                
+
+
                 fill(255,255,255);
                 writing = 'egg salad sandwich babyyyy';
                 // from text.html
@@ -90,7 +130,7 @@
                 con.font = "15pt sans-serif";
                 con.fillText(writing, 20, 60);
                 // con.strokeText(writing, 20, 60);
-                
+
 
                 // all circles
                 for (let i=0; i<circles.length; i++){
@@ -102,32 +142,40 @@
                         vertex(shapevertices[j].x, shapevertices[j].y);
                     }
                     endShape(CLOSE);
-                    
-                    // point and text 
-                    fill(255,255,255);
-                    
-                    ellipse(shapevertices[0]['x'], shapevertices[0]['y'],10, 10);
-                    
-                    //ellipse(center['x'], center['y'],10, 10);
-                    
-                    con.fillText('YEEHAW', shapevertices[0]['x']+10, shapevertices[0]['y']);
                 }
                 //print(Object.keys(shapevertices[0]['x']).length)
 
-                // all boxes
-//                for (let h=0; h<boxes.length; h++){
-//                    shapevertices = boxes[h].vertices;
-//                    if(h==0){
-//                        fill(200)
-//                    }else{
-//                        fill(100);
-//                    }
-//                    beginShape();
-//                    for (let i=0; i<shapevertices.length; i++) {
-//                        vertex(shapevertices[i].x, shapevertices[i].y);
-//                    }
-//                    endShape(CLOSE);
-//                }
+                // all circle text
+                for (let i=0; i<circles.length; i++){
+                    shapevertices = circles[i].vertices;
+                    fill(255,255,255);
+                    ellipse(shapevertices[0]['x'], shapevertices[0]['y'],10, 10);
+                    //center = circles[i].vertices.centre;
+                    //ellipse(center['x'], center.y,10, 10);
+                    con.fillText('YEEHAW', shapevertices[0]['x']+10, shapevertices[0]['y']);
+                }
+
+                
+                // back box
+                fill(150);
+                for (let h=0; h<boxes.length; h++){
+                    shapevertices = boxes[h].vertices;
+                    beginShape();
+                    for (let i=0; i<shapevertices.length; i++) {
+                        vertex(shapevertices[i].x, shapevertices[i].y);
+                    }
+                    endShape(CLOSE);
+                }
+                // back box text
+                for (let h=0; h<boxes.length; h++){
+                    shapevertices = boxes[h].vertices;
+                    fill(255,255,255);
+                    ellipse(shapevertices[h]['x'], shapevertices[h]['y'],10, 10);
+                    //center = circles[i].vertices.centre;
+                    //ellipse(center['x'], center.y,10, 10);
+                    con.fillText('BACK', shapevertices[0]['x']+10, shapevertices[0]['y']);
+                }
+                
 
                 // ground vertices
                 for (let i=0; i<ground.length; i++){
@@ -139,8 +187,37 @@
                     }
                     endShape(CLOSE);
                 }
-                
+
+                if (mConstraint.body) {
+                    var pos = mConstraint.body.position;
+                    var offset = mConstraint.constraint.pointB;
+                    var m = mConstraint.mouse.position;
+                    stroke(0, 255, 0);
+                    line(pos.x + offset.x, pos.y + offset.y, m.x, m.y);
+                    fill(0,0,255)
+                    ellipse(pos.x + offset.x, pos.y + offset.y, 10,10)
+                    print('clicked')
+                }
+                //console.log(mConstraint.constraint.id, mConstraint.mouse.mouseup)
             }
+
+            // continuation of mouseup attmempt
+            //Matter.MouseConstraint.mouse.mouseup(console.log('dog'));
+
+            //            function printconsole() {
+            //                console.log('dog')
+            //            }
+            //
+            //            Events.on(mConstraint, "mouseup", function() {
+            //                console.log('dog');
+            //            });
+            //            // keeps saying Events.on is not a function
+            //
+            //            Events.on(mouseConstraint, 'mouseup', function(event) {
+            //                var mousePosition = event.mouse.position;
+            //                console.log('mouseup at ' + mousePosition.x + ' ' + mousePosition.y);
+            //            });
+
 
             // add cube button
             document.getElementById('addCube').addEventListener('click', () => {
