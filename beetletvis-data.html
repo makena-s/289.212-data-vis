@@ -13,6 +13,7 @@
 
     <body>
 
+        <img hidden src="scarabsmall.png" id="scarabicon" width="50">
         <h1 id="h1Button" class="unselectable">beetle test</h1>
         <button id="addCube">add circle</button>
         <button id="bumpCube">bump circle</button>
@@ -20,7 +21,13 @@
         <br>
 
         <p id="demo">Click me.</p>
-        <img hidden src="scarabsmall.png" id="scarabicon" width="50">
+
+        <button onclick="showHide()">order-Coleoptera</button>
+        <p id="cooldiv" style = "display: none">
+            This is my DIV element.
+        </p>
+
+
 
         <script>
             // module aliases
@@ -140,9 +147,9 @@
                     Bodies.rectangle(-25, canvasheight/2, 50, canvasheight, {isStatic:true}),
                     Bodies.rectangle(canvaswidth+25, canvasheight/2, 50, canvasheight, {isStatic:true})
                 ]
-                
+
                 circlesize = [40]
-                
+
                 circles = [
                     Bodies.circle(canvaswidth/2,100,circlesize[0]),
                 ]
@@ -262,6 +269,15 @@
             function mouseUp() {
                 document.getElementById("demo").innerHTML = "You released the mouse button.";
                 print(beetledata);
+            }
+
+            function showHide() {
+                var x = document.getElementById("cooldiv");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
             }
 
         </script>

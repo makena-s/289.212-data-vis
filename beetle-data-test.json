@@ -120,7 +120,10 @@ console.log(groupnames(current));
 // WIP -------------------
 
 
-current = beetledata['order-Coleoptera']//['suborder-Protocoleoptera']['infraorder-None']//['clade-None']//['superfamily-Tshekardocoleoidea'];
+
+current = beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']//['clade-None']//['superfamily-Tshekardocoleoidea'];
+
+//console.log("TYPE" + typeof current)
 
 function numgroups(x) {
   return Object.keys(x).length;
@@ -130,36 +133,40 @@ function groupnames(x) {
   return Object.keys(x);
 }
 
+total = 0;
+loopcount = 0;
+console.log('------------------------------------------------------------------')
 function numfamilies(x) {
-  total = 0;
-  currentgroup = x;
+  //limit
+  if (loopcount > 500) {
+    return "TOO MANY LOOPS ERROR"
+  }
+  currentgroup = x; // object type
   currentkeys = []
-  currentkeyname = "empty";
-  for (x in currentgroup) currentkeys.push(x);
+  keytoenter = "empty";
+  for (i in currentgroup) currentkeys.push(i);
   
- // return numgroups(currentkeys)
-  
-  if (parseInt(currentkeys[0])*0 == 0) {
-    //console.log(currentkeys[0] + " its a number! ");
-    total = total + numgroups(currentkeys)
-    //return total
-    //return 'YES NUMBER'
-  } else {
+  //console.log('CURRENTKEYS ' + currentkeys)
+  //console.log('NUMGROUPS ' + numgroups(currentkeys))
+
+  if (parseInt(currentkeys[0])*0 != 0) { // if higher than family
     console.log('oneloop')
-    currentkeyname = currentkeys[0]
-    currentkeys = []
-    numfamilies(currentkeyname)
-    //console.log(currentkeys[0] + " not a number! ");
-    //return 'NOT NUMBER'
+    loopcount += 1;
+    keytoenter = currentkeys[0]
+    //currentgroup = String(currentgroup).concat(keytoenter)
+    currentgroup = currentgroup[keytoenter]
+    //return currentkeys[0]
+    //return currentgroup
+    numfamilies(currentgroup)
+    
+  } else { // add number of families to total
+    total += numgroups(currentkeys) // type: number
   }
   return total
-  
-  //return total;
 }
 
-document.write(numfamilies(current))
-
-
+//document.write(numfamilies(current))
+console.log('RESULT: ' + numfamilies(current))
 
 
 
