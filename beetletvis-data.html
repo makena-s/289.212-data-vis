@@ -14,16 +14,14 @@
         <!-- js tree -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.10/jstree.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
-
-
     </head>
 
     <body class="unselectable">
 
         <img hidden src="scarabsmall.png" id="scarabicon" width="50">
         <h1 id="h1Button" class="unselectable">BEETLE FAMILY TREE</h1>
-        <button id="addCube" class="unselectable">add circle</button>
-        <button id="bumpCube" class="unselectable">bump circle</button>
+        <button id="addCircle" class="unselectable">add circle</button>
+        <button id="bumpCircle" class="unselectable">bump circle</button>
 
         <br>
 
@@ -595,18 +593,6 @@
                 }
 
             }
-            //            
-            //            beetlearray = []
-            //            for (i in beetledata) {
-            //                beetlearray.push(i)
-            //            }
-            //            console.log(beetlearray)
-
-            //console.log(Object.values(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']['superfamily-Tshekardocoleoidea']))
-            // returns the 3 family names
-            
-
-
 
             // module aliases
             let Engine = Matter.Engine;
@@ -663,7 +649,6 @@
 
                 var canvasmouse = Mouse.create(canvas.elt);
                 canvasmouse.pixelRatio = pixelDensity();
-                //console.log(canvasmouse);
                 var options = {
                     mouse: canvasmouse
                 };
@@ -679,14 +664,14 @@
                 background(0);
                 fill(255,255,255);
 
-                // title
-                writing = 'beetle groups :^)';
+                // caption
+                writing = 'select a group to start :^)';
                 // from text.html
                 var drawing = document.getElementById("defaultCanvas0");
                 var con = drawing.getContext("2d");
-                con.font = "20pt sans-serif";
+                con.font = "20pt courier";
                 con.fillText(writing, 20, 40);
-                con.font = "15pt sans-serif";
+                con.font = "13pt courier";
 
                 // circles
                 for (let i=0; i<circles.length; i++){
@@ -736,25 +721,27 @@
                     var scarabicon = document.getElementById("scarabicon");
                     con.drawImage(scarabicon, pos.x + offset.x, pos.y + offset.y);    
                 }
-
-            } // end draw function
-
+            } // END DRAW FUNCTION
 
 
-            // FUNCTIONS AND EVENTLISTENERS -----------------------------
+            // START FUNCTIONS AND EVENTLISTENERS
 
-            // tree menu script
-            // change currentgroup to clicked folder
+            // START TREE SCRIPT 
+
+            // want to change currentgroup to clicked folder
             currentgroup = beetledata['order-Coleoptera']//['suborder-Protocoleoptera']['infraorder-None']['clade-None']; // type: object
 
+            selectedgroup = [];
             $(function () {
                 // 6 create an instance when the DOM is ready
                 $('#jstree').jstree();
+
                 // 7 bind to events triggered on the tree
                 $('#jstree').on("changed.jstree", function (e, data) {
                     // console.log(data.selected);
-                    selectedgroup = data.selected; // item's unique id
-                    print(data.selected)
+                    print(data.selected); // item's unique id
+                    selectedgroup.push(data.selected)
+
                     // clear old circles
                     Matter.World.remove(world, circles)
                     circles = [];
@@ -767,7 +754,12 @@
                         //print(circlesize[circlesize.length-1])
                     }
 
+                    var path = data.instance.get_path(data.node,',');
+                    console.log('SELECTED PATH: ' + path); // path returns as string 
+                    //selectedgroup = [path]
+                    console.log("SELECTED GROUP: " + selectedgroup[selectedgroup.length-1]) 
                 });
+
                 // 8 interact with the tree - either way is OK
                 $('button').on('click', function () {
                     $('#jstree').jstree(true).select_node('child_node_1');
@@ -776,20 +768,10 @@
                 });
             });
 
-            // attempt at counting children nodes
-            //            var currentNode = $("#evts").jstree("get_selected");
-            //            var childrens = $("#evts").jstree("get_children_dom",currentNode);
-            //            for(var i=0;i<childrens.length;i++) {
-            //                print(childrens[i].innerText);
-            //            }
+            // END TREE SCRIPT
 
-            
-            
-            
-            
-            
             // add circle button
-            document.getElementById('addCube').addEventListener('click', () => {
+            document.getElementById('addCircle').addEventListener('click', () => {
                 circlesize.push(Math.random()*100);
                 circles.push(Bodies.circle(canvaswidth/2,100,circlesize[circlesize.length-1]));
                 World.add(engine.world, circles[circles.length-1]);
@@ -798,7 +780,7 @@
             })
 
             // bump circle button
-            document.getElementById('bumpCube').addEventListener('click', () => {
+            document.getElementById('bumpCircle').addEventListener('click', () => {
                 for (let j=0; j<circles.length; j++){
                     Matter.Body.applyForce(circles[j], {x:circles[j].position.x-5, y:circles[j].position.y}, {x:0, y:-0.2});
                 }
@@ -832,6 +814,64 @@
             function groupnames(x) {
                 return Object.keys(x);
             }
+
+            function getcontent(id) {
+                if (document.getElementById(id).className == "jstree-anchor jstree-clicked") {
+                    return 'TRUE'
+                }
+                return document.getElementById(id).textContent; 
+            }
+
+            // START ATTEMPTED RECURSION FUNCTION
+            total = 0;
+            loopcount = 0;
+            console.log('------------------------------------------------------------------')
+            function numfamilies(x) {
+                //limit
+                if (loopcount > 500) {
+                    return "TOO MANY LOOPS ERROR"
+                }
+                currentdata = x; // object type
+                currentkeys = []
+                keytoenter = "empty";
+                for (i in currentdata) currentkeys.push(i);
+
+                //console.log('CURRENTKEYS ' + currentkeys)
+                //console.log('NUMGROUPS ' + numgroups(currentkeys))
+
+                if (parseInt(currentkeys[0])*0 != 0) { // if higher than family
+                    console.log('oneloop')
+                    loopcount += 1;
+                    keytoenter = currentkeys[0]
+                    //currentgroup = String(currentgroup).concat(keytoenter)
+                    currentdata = currentdata[keytoenter]
+                    //return currentkeys[0]
+                    //return currentgroup
+                    numfamilies(currentdata)
+
+                } else { // add number of families to total
+                    total += numgroups(currentdata) // type: number
+                }
+                return total
+            }
+            // END ATTEMPTED RECURSION FUNCTION
+
+            /*
+            // TRYING TO FIND WHAT IS CLICKED
+            $('body').on('click', function(e) {
+                    console.log('TEST: ' +  $(e.target))
+            });
+            */
+
+            // END FUNCTIONS AND EVENTLISTENERS
+
+            //console.log(getcontent("h1Button"))
+            //console.log(getcontent("j1_2_anchor"))
+            //console.log(currentgroup)
+            
+            console.log('TOTAL FAMILIES: ' + numfamilies(currentgroup))
+
+            // NEED TO CHANGE CURRENTGROUP TO THE CORRECT GROUP WHEN CLICKING ON A LINK
 
         </script>
 
