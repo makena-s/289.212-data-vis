@@ -18,10 +18,10 @@
 
     </head>
 
-    <body>
+    <body class="unselectable">
 
         <img hidden src="scarabsmall.png" id="scarabicon" width="50">
-        <h1 id="h1Button" class="unselectable">beetle test</h1>
+        <h1 id="h1Button" class="unselectable">BEETLE FAMILY TREE</h1>
         <button id="addCube" class="unselectable">add circle</button>
         <button id="bumpCube" class="unselectable">bump circle</button>
 
@@ -37,7 +37,7 @@
 -->
 
         <!-- tree menu -->
-        <div id="jstree">
+        <div id="jstree" class="unselectable">
             <!--json as html list-->
             <ul>
                 <li>
@@ -595,45 +595,17 @@
                 }
 
             }
-            
-            selectedgroup = beetledata['order-Coleoptera']; // type: object
-
-            // tree menu script
-            $(function () {
-                // 6 create an instance when the DOM is ready
-                $('#jstree').jstree();
-                // 7 bind to events triggered on the tree
-                $('#jstree').on("changed.jstree", function (e, data) {
-                    // console.log(data.selected);
-                    selectedgroup = data.selected; // item's unique id
-                    print(data.selected)
-                    // clear old circles
-                    Matter.World.remove(world, circles)
-                    circles = [];
-                    // create new circles
-                    for (x in beetledata['order-Coleoptera']) {
-                        circlesize.push(Math.random()*100);
-                        circles.push(Bodies.circle(canvaswidth/2,100,circlesize[circlesize.length-1]));
-                        World.add(engine.world, circles[circles.length-1]);
-                        print('circle add')
-                        //print(circlesize[circlesize.length-1])
-                    }
-
-                });
-                // 8 interact with the tree - either way is OK
-                $('button').on('click', function () {
-                    $('#jstree').jstree(true).select_node('child_node_1');
-                    $('#jstree').jstree('select_node', 'child_node_1');
-                    $.jstree.reference('#jstree').select_node('child_node_1');
-                });
-            });
-
-            // attempt at counting children nodes
-            //            var currentNode = $("#evts").jstree("get_selected");
-            //            var childrens = $("#evts").jstree("get_children_dom",currentNode);
-            //            for(var i=0;i<childrens.length;i++) {
-            //                print(childrens[i].innerText);
+            //            
+            //            beetlearray = []
+            //            for (i in beetledata) {
+            //                beetlearray.push(i)
             //            }
+            //            console.log(beetlearray)
+
+            //console.log(Object.values(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']['superfamily-Tshekardocoleoidea']))
+            // returns the 3 family names
+            
+
 
 
             // module aliases
@@ -649,7 +621,7 @@
 
             var mConstraint;
 
-            function setup() {
+            function setup() {                
                 // setup
                 canvaswidth = screen.height/1.4;
                 canvasheight = screen.height/1.4;
@@ -703,7 +675,7 @@
                 Engine.run(engine)
             }
 
-            function draw() {
+            function draw() {  
                 background(0);
                 fill(255,255,255);
 
@@ -735,7 +707,8 @@
                     ellipse(shapevertices[0]['x'], shapevertices[0]['y'],10, 10);
                     //center = circles[i].vertices.centre;
                     //ellipse(center['x'], center.y,10, 10);
-                    con.fillText('YEEHAW', shapevertices[0]['x']+10, shapevertices[0]['y']);
+                    text = Object.keys(currentgroup)[i]
+                    con.fillText(text, shapevertices[0]['x']+10, shapevertices[0]['y']);
                 }
 
                 // ground vertices
@@ -765,9 +738,56 @@
                 }
 
             } // end draw function
-            
-            // FUNCTIONS AND EVENTLISTENERS
 
+
+
+            // FUNCTIONS AND EVENTLISTENERS -----------------------------
+
+            // tree menu script
+            // change currentgroup to clicked folder
+            currentgroup = beetledata['order-Coleoptera']//['suborder-Protocoleoptera']['infraorder-None']['clade-None']; // type: object
+
+            $(function () {
+                // 6 create an instance when the DOM is ready
+                $('#jstree').jstree();
+                // 7 bind to events triggered on the tree
+                $('#jstree').on("changed.jstree", function (e, data) {
+                    // console.log(data.selected);
+                    selectedgroup = data.selected; // item's unique id
+                    print(data.selected)
+                    // clear old circles
+                    Matter.World.remove(world, circles)
+                    circles = [];
+                    // create new circles
+                    for (i in currentgroup) {
+                        circlesize.push(Math.random()*100);
+                        circles.push(Bodies.circle(canvaswidth/2,100,circlesize[circlesize.length-1]));
+                        World.add(engine.world, circles[circles.length-1]);
+                        //print('circle add')
+                        //print(circlesize[circlesize.length-1])
+                    }
+
+                });
+                // 8 interact with the tree - either way is OK
+                $('button').on('click', function () {
+                    $('#jstree').jstree(true).select_node('child_node_1');
+                    $('#jstree').jstree('select_node', 'child_node_1');
+                    $.jstree.reference('#jstree').select_node('child_node_1');
+                });
+            });
+
+            // attempt at counting children nodes
+            //            var currentNode = $("#evts").jstree("get_selected");
+            //            var childrens = $("#evts").jstree("get_children_dom",currentNode);
+            //            for(var i=0;i<childrens.length;i++) {
+            //                print(childrens[i].innerText);
+            //            }
+
+            
+            
+            
+            
+            
             // add circle button
             document.getElementById('addCube').addEventListener('click', () => {
                 circlesize.push(Math.random()*100);
@@ -808,7 +828,7 @@
             function numgroups(x) {
                 return Object.keys(x).length;
             }
-            
+
             function groupnames(x) {
                 return Object.keys(x);
             }
