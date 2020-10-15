@@ -8,41 +8,512 @@
         <title>beetle test</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link rel="stylesheet" href="stylesheet.css">
+
+        <!-- js tree -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.10/jstree.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+
+
     </head>
 
     <body>
 
         <img hidden src="scarabsmall.png" id="scarabicon" width="50">
         <h1 id="h1Button" class="unselectable">beetle test</h1>
-        <button id="addCube">add circle</button>
-        <button id="bumpCube">bump circle</button>
+        <button id="addCube" class="unselectable">add circle</button>
+        <button id="bumpCube" class="unselectable">bump circle</button>
 
         <br>
 
-        <p id="demo">Click me.</p>
+        <p id="demo" class="unselectable">BEETLE DATA</p>
 
-        <button onclick="showHide()">order-Coleoptera</button>
-        <p id="cooldiv" style = "display: none">
-            This is my DIV element.
-        </p>
+        <!--
+<button onclick="showHide()">order-Coleoptera</button>
+<p id="cooldiv" style = "display: none">
+<button onclick="showHide()">suborder-Protocoleoptera</button>
+</p>
+-->
 
-
+        <!-- tree menu -->
+        <div id="jstree">
+            <!--json as html list-->
+            <ul>
+                <li>
+                    order-Coleoptera
+                    <ul>
+                        <li>
+                            suborder-Protocoleoptera
+                            <ul>
+                                <li>
+                                    infraorder-None
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-Tshekardocoleoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Tshekardocoleidae</li>
+                                                        <li>1 =&gt; Labradorocoleidae</li>
+                                                        <li>2 =&gt; Oborocoleidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Permocupedoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Permocupedidae</li>
+                                                        <li>1 =&gt; Taldycupedida</li>
+                                                        <li>2 =&gt; Ademosynidae</li>
+                                                        <li>3 =&gt; Permosynidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            suborder-Archostemata
+                            <ul>
+                                <li>
+                                    infraorder-None
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-None
+                                                    <ul>
+                                                        <li>0 =&gt; Crowsoniellidae</li>
+                                                        <li>1 =&gt; Cupedidae</li>
+                                                        <li>2 =&gt; Micromalthidae</li>
+                                                        <li>3 =&gt; Ommatidae</li>
+                                                        <li>4 =&gt; Jurodidae</li>
+                                                        <li>5 =&gt; Triadocupedidae</li>
+                                                        <li>6 =&gt; Magnocoleidae</li>
+                                                        <li>7 =&gt; Obrieniidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            suborder-Myxophaga
+                            <ul>
+                                <li>
+                                    infraorder-None
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-Asiocoleoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Asiocoleidae</li>
+                                                        <li>1 =&gt; Tricoleidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Rhombocoleoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Rhombocoleidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Schizophoroidea
+                                                    <ul>
+                                                        <li>0 =&gt; Schizophoridae</li>
+                                                        <li>1 =&gt; Catiniidae</li>
+                                                        <li>2 =&gt; Schizocoleidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Lepiceroidea
+                                                    <ul>
+                                                        <li>0 =&gt; Lepiceridae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Sphaeriusoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Torridincolidae</li>
+                                                        <li>1 =&gt; Hydroscaphidae</li>
+                                                        <li>2 =&gt; Sphaeriusidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            suborder-Adephaga
+                            <ul>
+                                <li>
+                                    infraorder-None
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-None
+                                                    <ul>
+                                                        <li>0 =&gt; Tritarsidae</li>
+                                                        <li>1 =&gt; Gyrinidae</li>
+                                                        <li>2 =&gt; Trachypachidae</li>
+                                                        <li>3 =&gt; Rhysodidae</li>
+                                                        <li>4 =&gt; Carabidae</li>
+                                                        <li>5 =&gt; Haliplidae</li>
+                                                        <li>6 =&gt; Triaplidae</li>
+                                                        <li>7 =&gt; Colymbotethidae</li>
+                                                        <li>8 =&gt; Parahygrobiidae</li>
+                                                        <li>9 =&gt; Coptoclavidae</li>
+                                                        <li>10 =&gt; Liadytidae</li>
+                                                        <li>11 =&gt; Meruidae</li>
+                                                        <li>12 =&gt; Noteridae</li>
+                                                        <li>13 =&gt; Amphizoidae</li>
+                                                        <li>14 =&gt; Aspidytidae</li>
+                                                        <li>15 =&gt; Hygrobiidae</li>
+                                                        <li>16 =&gt; Dytiscidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            suborder-Polyphaga
+                            <ul>
+                                <li>
+                                    infraorder-Staphyliniformia
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-Hydrophiloidea
+                                                    <ul>
+                                                        <li>0 =&gt; Hydrophilidae</li>
+                                                        <li>1 =&gt; Sphaeritidae</li>
+                                                        <li>2 =&gt; Synteliidae</li>
+                                                        <li>3 =&gt; Histeridae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Staphylinoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Hydraenidae</li>
+                                                        <li>1 =&gt; Ptiliidae</li>
+                                                        <li>2 =&gt; Agyrtidae</li>
+                                                        <li>3 =&gt; Leiodidae</li>
+                                                        <li>4 =&gt; Silphidae</li>
+                                                        <li>5 =&gt; Staphylinidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    infraorder-Scarabaeiformia
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-Scarabaeoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Pleocomidae</li>
+                                                        <li>1 =&gt; Geotrupidae</li>
+                                                        <li>2 =&gt; Belohinidae</li>
+                                                        <li>3 =&gt; Passalidae</li>
+                                                        <li>4 =&gt; Trogidae</li>
+                                                        <li>5 =&gt; Glaresidae</li>
+                                                        <li>6 =&gt; Diphyllostomatidae</li>
+                                                        <li>7 =&gt; Lucanidae</li>
+                                                        <li>8 =&gt; Ochodaeidae</li>
+                                                        <li>9 =&gt; Hybosoridae</li>
+                                                        <li>10 =&gt; Glaphyridae</li>
+                                                        <li>11 =&gt; Scarabaeidae</li>
+                                                        <li>12 =&gt; Coprinisphaeridae</li>
+                                                        <li>13 =&gt; Pallichnidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    infraorder-Elateriformia
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-Scirtoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Pleocomidae</li>
+                                                        <li>1 =&gt; Geotrupidae</li>
+                                                        <li>2 =&gt; Belohinidae</li>
+                                                        <li>3 =&gt; Passalidae</li>
+                                                        <li>4 =&gt; Trogidae</li>
+                                                        <li>5 =&gt; Glaresidae</li>
+                                                        <li>6 =&gt; Diphyllostomatidae</li>
+                                                        <li>7 =&gt; Lucanidae</li>
+                                                        <li>8 =&gt; Ochodaeidae</li>
+                                                        <li>9 =&gt; Hybosoridae</li>
+                                                        <li>10 =&gt; Glaphyridae</li>
+                                                        <li>11 =&gt; Scarabaeidae</li>
+                                                        <li>12 =&gt; Coprinisphaeridae</li>
+                                                        <li>13 =&gt; Pallichnidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Dascilloidea
+                                                    <ul>
+                                                        <li>0 =&gt; Dascillidae</li>
+                                                        <li>1 =&gt; Rhipiceridae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Buprestoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Schizopodidae</li>
+                                                        <li>1 =&gt; Buprestidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Byrrhoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Byrrhidae</li>
+                                                        <li>1 =&gt; Elmidae</li>
+                                                        <li>2 =&gt; Dryopidae</li>
+                                                        <li>3 =&gt; Lutrochidae</li>
+                                                        <li>4 =&gt; Limnichidae</li>
+                                                        <li>5 =&gt; Heteroceridae</li>
+                                                        <li>6 =&gt; Psephenidae</li>
+                                                        <li>7 =&gt; Cneoglossidae</li>
+                                                        <li>8 =&gt; Ptilodactylidae</li>
+                                                        <li>9 =&gt; Podabrocephalidae</li>
+                                                        <li>10 =&gt; Chelonariidae</li>
+                                                        <li>11 =&gt; Eulichadidae</li>
+                                                        <li>12 =&gt; Callirhipidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Elateroidea
+                                                    <ul>
+                                                        <li>0 =&gt; Artematopodidae</li>
+                                                        <li>1 =&gt; Brachypsectridae</li>
+                                                        <li>2 =&gt; Cantharidae</li>
+                                                        <li>3 =&gt; Cerophytidae</li>
+                                                        <li>4 =&gt; Elateridae</li>
+                                                        <li>5 =&gt; Eucnemidae</li>
+                                                        <li>6 =&gt; Lampyridae</li>
+                                                        <li>7 =&gt; Lycidae</li>
+                                                        <li>8 =&gt; Omethidae</li>
+                                                        <li>9 =&gt; Phengodidae</li>
+                                                        <li>10 =&gt; Rhagophthalmidae</li>
+                                                        <li>11 =&gt; Sinopyrophoridae</li>
+                                                        <li>12 =&gt; Throscidae</li>
+                                                        <li>13 =&gt; Berendtimiridae</li>
+                                                        <li>14 =&gt; Praelateriidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Rhinorhipoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Rhinorhipidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    infraorder-Bostrichiformia
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-Derodontoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Derodontidae</li>
+                                                        <li>1 =&gt; Nosodendridae</li>
+                                                        <li>2 =&gt; Jacobsoniidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Bostrichoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Dermestidae</li>
+                                                        <li>1 =&gt; Endecatomidae</li>
+                                                        <li>2 =&gt; Bostrichidae</li>
+                                                        <li>3 =&gt; Ptinidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    infraorder-Cucujiformia
+                                    <ul>
+                                        <li>
+                                            clade-None
+                                            <ul>
+                                                <li>
+                                                    superfamily-Lymexyloidea
+                                                    <ul>
+                                                        <li>0 =&gt; Lymexylidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Cleroidea
+                                                    <ul>
+                                                        <li>0 =&gt; Phloiophilidae</li>
+                                                        <li>1 =&gt; Trogossitidae</li>
+                                                        <li>2 =&gt; Chaetosomatidae</li>
+                                                        <li>3 =&gt; Metaxinidae</li>
+                                                        <li>4 =&gt; Thanerocleridae</li>
+                                                        <li>5 =&gt; Cleridae</li>
+                                                        <li>6 =&gt; Acanthocnemidae</li>
+                                                        <li>7 =&gt; Phycosecidae</li>
+                                                        <li>8 =&gt; Prionoceridae</li>
+                                                        <li>9 =&gt; Mauroniscidae</li>
+                                                        <li>10 =&gt; Melyridae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Cucujoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Parandrexidae</li>
+                                                        <li>1 =&gt; Sinisilvanidae</li>
+                                                        <li>2 =&gt; Boganiidae</li>
+                                                        <li>3 =&gt; Byturidae</li>
+                                                        <li>4 =&gt; Helotidae</li>
+                                                        <li>5 =&gt; Protocucujidae</li>
+                                                        <li>6 =&gt; Sphindidae</li>
+                                                        <li>7 =&gt; Biphyllidae</li>
+                                                        <li>8 =&gt; Erotylidae</li>
+                                                        <li>9 =&gt; Monotomidae</li>
+                                                        <li>10 =&gt; Hobartiidae</li>
+                                                        <li>11 =&gt; Cryptophagidae</li>
+                                                        <li>12 =&gt; Agapythidae</li>
+                                                        <li>13 =&gt; Priasilphidae</li>
+                                                        <li>14 =&gt; Phloeostichidae</li>
+                                                        <li>15 =&gt; Silvanidae</li>
+                                                        <li>16 =&gt; Cucujidae</li>
+                                                        <li>17 =&gt; Myraboliidae</li>
+                                                        <li>18 =&gt; Cavognathidae</li>
+                                                        <li>19 =&gt; Lamingtoniidae</li>
+                                                        <li>20 =&gt; Passandridae</li>
+                                                        <li>21 =&gt; Phalacridae</li>
+                                                        <li>22 =&gt; Propalticidae</li>
+                                                        <li>23 =&gt; Laemophloeidae</li>
+                                                        <li>24 =&gt; Tasmosalpingidae</li>
+                                                        <li>25 =&gt; Cyclaxyridae</li>
+                                                        <li>26 =&gt; Kateretidae</li>
+                                                        <li>27 =&gt; Nitidulidae</li>
+                                                        <li>28 =&gt; Smicripidae</li>
+                                                        <li>29 =&gt; Bothrideridae</li>
+                                                        <li>30 =&gt; Cerylonidae</li>
+                                                        <li>31 =&gt; Alexiidae</li>
+                                                        <li>32 =&gt; Discolomatidae</li>
+                                                        <li>33 =&gt; Endomychidae</li>
+                                                        <li>34 =&gt; Coccinellidae</li>
+                                                        <li>35 =&gt; Corylophidae</li>
+                                                        <li>36 =&gt; Akalyptoischiidae</li>
+                                                        <li>37 =&gt; Latridiidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Tenebrionoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Mycetophagidae</li>
+                                                        <li>1 =&gt; Archeocrypticidae</li>
+                                                        <li>2 =&gt; Pterogeniidae</li>
+                                                        <li>3 =&gt; Ciidae</li>
+                                                        <li>4 =&gt; Tetratomidae</li>
+                                                        <li>5 =&gt; Melandryidae</li>
+                                                        <li>6 =&gt; Mordellidae</li>
+                                                        <li>7 =&gt; Ripiphoridae</li>
+                                                        <li>8 =&gt; Zopheridae</li>
+                                                        <li>9 =&gt; Ulodidae</li>
+                                                        <li>10 =&gt; Promecheilidae</li>
+                                                        <li>11 =&gt; Chalcodryidae</li>
+                                                        <li>12 =&gt; Trachelostenidae</li>
+                                                        <li>13 =&gt; Tenebrionidae</li>
+                                                        <li>14 =&gt; Prostomidae</li>
+                                                        <li>15 =&gt; Synchroidae</li>
+                                                        <li>16 =&gt; Stenotrachelidae</li>
+                                                        <li>17 =&gt; Oedemeridae</li>
+                                                        <li>18 =&gt; Meloidae</li>
+                                                        <li>19 =&gt; Mycteridae</li>
+                                                        <li>20 =&gt; Boridae</li>
+                                                        <li>21 =&gt; Trictenotomidae</li>
+                                                        <li>22 =&gt; Pythidae</li>
+                                                        <li>23 =&gt; Pyrochroidae</li>
+                                                        <li>24 =&gt; Salpingidae</li>
+                                                        <li>25 =&gt; Anthicidae</li>
+                                                        <li>26 =&gt; Aderidae</li>
+                                                        <li>27 =&gt; Scraptiidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            clade-Phytophaga
+                                            <ul>
+                                                <li>
+                                                    superfamily-Chrysomeloidea
+                                                    <ul>
+                                                        <li>0 =&gt; Oxypeltidae</li>
+                                                        <li>1 =&gt; Vesperidae</li>
+                                                        <li>2 =&gt; Disteniidae</li>
+                                                        <li>3 =&gt; Cerambycidae</li>
+                                                        <li>4 =&gt; Megalopodidae</li>
+                                                        <li>5 =&gt; Orsodacnidae</li>
+                                                        <li>6 =&gt; Chrysomelidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li>
+                                                    superfamily-Curculionoidea
+                                                    <ul>
+                                                        <li>0 =&gt; Nemonychidae</li>
+                                                        <li>1 =&gt; Anthribidae</li>
+                                                        <li>2 =&gt; Ulyanidae</li>
+                                                        <li>3 =&gt; Belidae</li>
+                                                        <li>4 =&gt; Caridae</li>
+                                                        <li>5 =&gt; Attelabidae</li>
+                                                        <li>6 =&gt; Brentidae</li>
+                                                        <li>7 =&gt; Dryophthoridae</li>
+                                                        <li>8 =&gt; Brachyceridae</li>
+                                                        <li>9 =&gt; Curculionidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
         <script>
-            // module aliases
-            let Engine = Matter.Engine;
-            // let Render = Matter.Render;
-            let World = Matter.World;
-            let Bodies = Matter.Bodies;
-            Constraint = Matter.Constraint,
-                Mouse = Matter.Mouse,
-                MouseConstraint = Matter.MouseConstraint;
-
-            let engine, ground, circles, world;
-
-            var mConstraint;
-
             // BEETLEDATA JSON COPIED HERE
             beetledata = {
 
@@ -124,6 +595,59 @@
                 }
 
             }
+            
+            selectedgroup = beetledata['order-Coleoptera']; // type: object
+
+            // tree menu script
+            $(function () {
+                // 6 create an instance when the DOM is ready
+                $('#jstree').jstree();
+                // 7 bind to events triggered on the tree
+                $('#jstree').on("changed.jstree", function (e, data) {
+                    // console.log(data.selected);
+                    selectedgroup = data.selected; // item's unique id
+                    print(data.selected)
+                    // clear old circles
+                    Matter.World.remove(world, circles)
+                    circles = [];
+                    // create new circles
+                    for (x in beetledata['order-Coleoptera']) {
+                        circlesize.push(Math.random()*100);
+                        circles.push(Bodies.circle(canvaswidth/2,100,circlesize[circlesize.length-1]));
+                        World.add(engine.world, circles[circles.length-1]);
+                        print('circle add')
+                        //print(circlesize[circlesize.length-1])
+                    }
+
+                });
+                // 8 interact with the tree - either way is OK
+                $('button').on('click', function () {
+                    $('#jstree').jstree(true).select_node('child_node_1');
+                    $('#jstree').jstree('select_node', 'child_node_1');
+                    $.jstree.reference('#jstree').select_node('child_node_1');
+                });
+            });
+
+            // attempt at counting children nodes
+            //            var currentNode = $("#evts").jstree("get_selected");
+            //            var childrens = $("#evts").jstree("get_children_dom",currentNode);
+            //            for(var i=0;i<childrens.length;i++) {
+            //                print(childrens[i].innerText);
+            //            }
+
+
+            // module aliases
+            let Engine = Matter.Engine;
+            // let Render = Matter.Render;
+            let World = Matter.World;
+            let Bodies = Matter.Bodies;
+            Constraint = Matter.Constraint,
+                Mouse = Matter.Mouse,
+                MouseConstraint = Matter.MouseConstraint;
+
+            let engine, ground, circles, world;
+
+            var mConstraint;
 
             function setup() {
                 // setup
@@ -196,7 +720,7 @@
                 for (let i=0; i<circles.length; i++){
                     fill(100,100,255);
                     shapevertices = circles[i].vertices;
-                    center = circles[i].vertices.centre;
+                    // center = circles[i].vertices.centre;
                     beginShape();
                     for (let j=0; j<shapevertices.length; j++) {
                         vertex(shapevertices[j].x, shapevertices[j].y);
@@ -241,6 +765,8 @@
                 }
 
             } // end draw function
+            
+            // FUNCTIONS AND EVENTLISTENERS
 
             // add circle button
             document.getElementById('addCube').addEventListener('click', () => {
@@ -264,11 +790,10 @@
                 print('header clicked')
             })
 
-            // click start
+            // click subtitle
             document.getElementById("demo").addEventListener("mouseup", mouseUp);
             function mouseUp() {
-                document.getElementById("demo").innerHTML = "You released the mouse button.";
-                print(beetledata);
+                document.getElementById("demo").innerHTML = "BEETLE DATA :^)";
             }
 
             function showHide() {
@@ -278,6 +803,14 @@
                 } else {
                     x.style.display = "none";
                 }
+            }
+
+            function numgroups(x) {
+                return Object.keys(x).length;
+            }
+            
+            function groupnames(x) {
+                return Object.keys(x);
             }
 
         </script>

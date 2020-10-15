@@ -1,14 +1,14 @@
 .unselectable {
-   -moz-user-select: -moz-none;
-   -khtml-user-select: none;
-   -webkit-user-select: none;
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
 
-   /*
-     Introduced in IE 10.
-     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
-   */
-   -ms-user-select: none;
-   user-select: none;
+    /*
+    Introduced in IE 10.
+    See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+    */
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .centered {
@@ -21,7 +21,7 @@ body {
     font-size: 16px;
     color: seagreen;
     font-family: courier;
-    font-weight: normal;
+    font-weight: bold;
     background-color: lightsteelblue;
 }
 
@@ -30,4 +30,8 @@ button {
     color: orangered;
     font-family: courier;
     font-weight: bold;
+}
+
+#jstree{
+    height: length|percentage|auto|initial|inherit;
 }
