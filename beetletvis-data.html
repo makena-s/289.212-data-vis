@@ -32,7 +32,7 @@
                 Mouse = Matter.Mouse,
                 MouseConstraint = Matter.MouseConstraint;
 
-            let engine, boxes, ground, circles, world;
+            let engine, ground, circles, world;
 
             var mConstraint;
 
@@ -127,7 +127,7 @@
                 //canvas.position(screen.width-(canvaswidth*1.05), (canvaswidth*.05));
                 canvas.position(canvaswidth-100, (canvaswidth*.05));
                 strokeWeight(0);
-                circlesize = 30;
+                circlesize = [];
 
                 // create an engine
                 engine = Engine.create();
@@ -141,21 +141,15 @@
                     Bodies.rectangle(canvaswidth+25, canvasheight/2, 50, canvasheight, {isStatic:true})
                 ]
 
-                boxes = [
-                    Bodies.rectangle(400, 200, 50, 50),
-                ]
-
+                circlesize.push(beetle)
                 circles = [
-                    Bodies.circle(canvaswidth/2,100,circlesize),
-                    Bodies.circle(canvaswidth/2,300,circlesize)
+                    Bodies.circle(canvaswidth/2,100,circlesize[0]),
                 ]
 
                 // add all of the bodies to the world
                 World.add(
                     engine.world, [
-                        //boxes[0],
                         circles[0],
-                        circles[1],
                         ground[0],
                         ground[1],
                         ground[2],
@@ -242,17 +236,15 @@
 
             // add circle button
             document.getElementById('addCube').addEventListener('click', () => {
-                circles.push(Bodies.circle(canvaswidth/2,100,circlesize));
+                circlesize.push(Math.random()*100);
+                circles.push(Bodies.circle(canvaswidth/2,100,circlesize[circlesize.length-1]));
                 World.add(engine.world, circles[circles.length-1]);
                 print('circle add')
+                print(circlesize[circlesize.length-1])
             })
 
             // bump circle button
             document.getElementById('bumpCube').addEventListener('click', () => {
-                // Matter.Body.applyForce(boxes[0], {x:boxes[0].position.x-5, y:boxes[0].position.y}, {x:0, y:-0.3});
-                for (let i=0; i<boxes.length; i++){
-                    Matter.Body.applyForce(boxes[i], {x:boxes[i].position.x-5, y:boxes[i].position.y}, {x:0, y:-0.3});
-                }
                 for (let j=0; j<circles.length; j++){
                     Matter.Body.applyForce(circles[j], {x:circles[j].position.x-5, y:circles[j].position.y}, {x:0, y:-0.2});
                 }

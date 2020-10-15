@@ -1,5 +1,5 @@
 beetledata = {
-    
+
     "order-Coleoptera": {
         "suborder-Protocoleoptera": {
             "infraorder-None": {
@@ -76,7 +76,7 @@ beetledata = {
             }
         }
     }
-    
+
 }
 
 // RETRY ALL OPERATIONS WITH CONSOLE.LOG INSTEAD.........
@@ -99,6 +99,100 @@ document.write(Object.keys(beetledata['order-Coleoptera']['suborder-Protocoleopt
 document.write(beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']['superfamily-Tshekardocoleoidea'][0]);
 // returns the first family Tshekardocoleidae
 // if type is familylist then remomve Object.keys?
+
+
+// FUNCTION VERSIONS
+
+current = beetledata['order-Coleoptera'];
+
+function numgroups(x) {
+    return Object.keys(x).length;
+}
+
+function groupnames(x) {
+    return Object.keys(x);
+}
+
+document.write(numgroups(current));
+console.log(groupnames(current));
+
+
+// WIP -------------------
+
+current = beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']['superfamily-Tshekardocoleoidea'];
+
+function numgroups(x) {
+    return Object.keys(x).length;
+}
+
+function groupnames(x) {
+    return Object.keys(x);
+}
+
+function numfamilies(x) {
+    total = 0;
+
+    currentgroup = x;
+    currentkeys = [];
+
+    for (x in currentgroup) {
+        currentkeys.push(x)
+    }
+    // creates array of keys
+
+    //return typeof Object.keys(currentgroup)
+    //return typeof "egg"
+    //return typeof 1
+
+    //return typeof currentkeys[0]
+    //return currentkeys[0]
+
+
+    if (typeof currentkeys[0] == "object") {
+        return currentkeys[0] + " its an object "
+    } else if (typeof currentkeys[0] == "number") {
+        return "its a number"
+    } else if (typeof currentkeys[0] == "string"){
+        return "its a string"
+    }
+
+    //return Object.keys(currentgroup);
+    return "no matches :^0"
+
+    //return total;
+}
+
+//document.write(numgroups(current));
+//console.log(groupnames(current));
+//document.write(numfamilies(current));
+console.log(numfamilies(current));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // ALTERNATE METHOD: also does not work with families?? bruh... prob better to use above method
