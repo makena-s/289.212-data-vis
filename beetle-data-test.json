@@ -119,54 +119,45 @@ console.log(groupnames(current));
 
 // WIP -------------------
 
-current = beetledata['order-Coleoptera']['suborder-Protocoleoptera']['infraorder-None']['clade-None']['superfamily-Tshekardocoleoidea'];
+
+current = beetledata['order-Coleoptera']//['suborder-Protocoleoptera']['infraorder-None']//['clade-None']//['superfamily-Tshekardocoleoidea'];
 
 function numgroups(x) {
-    return Object.keys(x).length;
+  return Object.keys(x).length;
 }
 
 function groupnames(x) {
-    return Object.keys(x);
+  return Object.keys(x);
 }
 
 function numfamilies(x) {
-    total = 0;
-
-    currentgroup = x;
-    currentkeys = [];
-
-    for (x in currentgroup) {
-        currentkeys.push(x)
-    }
-    // creates array of keys
-
-    //return typeof Object.keys(currentgroup)
-    //return typeof "egg"
-    //return typeof 1
-
-    //return typeof currentkeys[0]
-    //return currentkeys[0]
-
-
-    if (typeof currentkeys[0] == "object") {
-        return currentkeys[0] + " its an object "
-    } else if (typeof currentkeys[0] == "number") {
-        return "its a number"
-    } else if (typeof currentkeys[0] == "string"){
-        return "its a string"
-    }
-
-    //return Object.keys(currentgroup);
-    return "no matches :^0"
-
-    //return total;
+  total = 0;
+  currentgroup = x;
+  currentkeys = []
+  currentkeyname = "empty";
+  for (x in currentgroup) currentkeys.push(x);
+  
+ // return numgroups(currentkeys)
+  
+  if (parseInt(currentkeys[0])*0 == 0) {
+    //console.log(currentkeys[0] + " its a number! ");
+    total = total + numgroups(currentkeys)
+    //return total
+    //return 'YES NUMBER'
+  } else {
+    console.log('oneloop')
+    currentkeyname = currentkeys[0]
+    currentkeys = []
+    numfamilies(currentkeyname)
+    //console.log(currentkeys[0] + " not a number! ");
+    //return 'NOT NUMBER'
+  }
+  return total
+  
+  //return total;
 }
 
-//document.write(numgroups(current));
-//console.log(groupnames(current));
-//document.write(numfamilies(current));
-console.log(numfamilies(current));
-
+document.write(numfamilies(current))
 
 
 
