@@ -1,4 +1,4 @@
-// COMPLETE VERSION OF COUNTFAMILIES FUNCTION
+// find number of groups inside a specified group
 
 beetledata = {
 
@@ -81,48 +81,63 @@ beetledata = {
 
 }
 
-// renamed all duplicates to be unique: clade-None1
+document.write(countGroups('order-Coleoptera')+ "<br>"); // correct
+document.write(countGroups('clade-None1')+ "<br>") // correct
+document.write(countGroups('suborder-Polyphaga')+ "<br>") // correct
+document.write(countGroups('infraorder-Staphyliniformia')+ "<br>") // correct
+document.write('LAST: ' + countGroups('family-Tshekardocoleidae')+ "<br>") // correct
 
-function countFamilies(group, totalcount) {
-    result = totalcount;
+document.write(" ----- " + "<br>")
 
+document.write(findGroups('order-Coleoptera')+ "<br>"); // correct
+document.write(findGroups('clade-None1')+ "<br>") // correct
+document.write(findGroups('suborder-Polyphaga')+ "<br>") // correct
+document.write(findGroups('infraorder-Staphyliniformia')+ "<br>") // correct
+document.write('LAST: ' + findGroups('family-Tshekardocoleidae')+ "<br>") // correct
+
+// COUNT GROUPS WITHIN A GROUP
+function countGroups(group) {
+    result = 0;
+    children = [];
     Object.keys(beetledata).forEach(orderkey => {
         // check orders
         if (orderkey == group) {
-            Object.keys(beetledata[orderkey]).forEach(suborderkey => {
-                countFamilies(suborderkey, result)
-            });
+            result = Object.keys(beetledata[orderkey]).length;
+            Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
+                children.push(suborderkey);
+            })
         } else {
             Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
                 // check suborders
                 if (suborderkey == group) {
-                    Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
-                        countFamilies(infrakey, result)
-                        //console.log("RESULT: " + result)
-                    });
+                    result = Object.keys(beetledata[orderkey][suborderkey]).length;
+                    Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(suborderkey => {
+                        children.push(suborderkey);
+                    })
                 } else {
                     Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
                         // check infraorders
                         if (infrakey == group) {
-                            Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
-                                countFamilies(cladekey, result)
-                            });
+                            result = Object.keys(beetledata[orderkey][suborderkey][infrakey]).length;
+                            Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(suborderkey => {
+                                children.push(suborderkey);
+                            })
                         } else {
                             Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
                                 // check clades
                                 if (cladekey == group) {
-                                    Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
-                                        countFamilies(superfamkey, result)
-                                    });
+                                    result = Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).length;
+                                    Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(suborderkey => {
+                                        children.push(suborderkey);
+                                    })
                                 } else {
                                     Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
                                         // check superfamilies
                                         if (superfamkey == group) {
-                                            beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey].forEach(family => {
-                                                //console.log('family: ' + family);
-                                                document.write(family + '<br />');
-                                                result += 1;
-                                            });
+                                            result = Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey]).length;
+                                            Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey]).forEach(suborderkey => {
+                                                children.push(suborderkey);
+                                            })
                                         }
                                     });
                                 }
@@ -130,44 +145,68 @@ function countFamilies(group, totalcount) {
                         }
                     });
                 }
-            });
+            })
         }
-    });
+    })
+    //return children;
     return result;
 };
 
-//document.write(countFamilies('superfamily-Tshekardocoleoidea',0));
-
-document.write(countFamilies('order-Coleoptera',0));
-
-document.write(" ----- " + "<br>")
-
-//document.write(countFamilies('clade-None1',0));
-
-//document.write(countFamilies('infraorder-None1',0));
-
-//document.write(countFamilies('infraorder-Elateriformia',0));
-
-//document.write(countFamilies('suborder-Archostemata',0));
-
-//document.write(countFamilies('suborder-Polyphaga',0));
-
-// ------- it all works now :^) ------------------------------
-
-//document.write(countFamilies('clade-Phytophaga', 0)); // correct 17
-//document.write(countFamilies('clade-None9', 0)); // correct 78
-//document.write(countFamilies('clade-None8', 0)); // correct 7
-//document.write(countFamilies('clade-None7', 0)); // correct 39
-//document.write(countFamilies('clade-None6', 0)); // correct 14
-//document.write(countFamilies('clade-None5', 0)); // correct 10
-
-document.write(" ----- " + "<br>")
-
-//document.write(countFamilies('infraorder-Staphyliniformia', 0)); // correct 10
-//document.write(countFamilies('infraorder-Scarabaeiformia', 0)); // correct 14
-//document.write(countFamilies('infraorder-Elateriformia', 0)); // correct 39
-//document.write(countFamilies('infraorder-Bostrichiformia', 0)); // correct 7
-//document.write(countFamilies('infraorder-Cucujiformia', 0)); // correct 14
-
+// NAME GROUPS WITHIN A GROUP
+function findGroups(group) {
+    result = 0;
+    children = [];
+    Object.keys(beetledata).forEach(orderkey => {
+        // check orders
+        if (orderkey == group) {
+            result = Object.keys(beetledata[orderkey]).length;
+            Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
+                children.push(suborderkey);
+            })
+        } else {
+            Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
+                // check suborders
+                if (suborderkey == group) {
+                    result = Object.keys(beetledata[orderkey][suborderkey]).length;
+                    Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(suborderkey => {
+                        children.push(suborderkey);
+                    })
+                } else {
+                    Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
+                        // check infraorders
+                        if (infrakey == group) {
+                            result = Object.keys(beetledata[orderkey][suborderkey][infrakey]).length;
+                            Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(suborderkey => {
+                                children.push(suborderkey);
+                            })
+                        } else {
+                            Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
+                                // check clades
+                                if (cladekey == group) {
+                                    result = Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).length;
+                                    Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(suborderkey => {
+                                        children.push(suborderkey);
+                                    })
+                                } else {
+                                    Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
+                                        // check superfamilies
+                                        if (superfamkey == group) {
+                                            result = Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey]).length;
+                                            Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey]).forEach(suborderkey => {
+                                                children.push(suborderkey);
+                                            })
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            })
+        }
+    })
+    return children;
+    //return result;
+};
 
 
