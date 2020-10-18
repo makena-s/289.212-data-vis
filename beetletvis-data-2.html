@@ -676,13 +676,13 @@
                     endShape(CLOSE);
                 }
 
-                circletexts = []
+                //circletexts = []
                 // circle text
                 for (let i=0; i<circles.length; i++){
                     shapevertices = circles[i].vertices;
                     fill(255,255,255);
                     ellipse(shapevertices[0]['x'], shapevertices[0]['y'],10, 10);
-                    text = circletexts[i]
+                    text = 'currentgroup'
                     con.fillText(text, shapevertices[0]['x']+10, shapevertices[0]['y']);
                 }
 
@@ -744,15 +744,15 @@
                     circlesize = [];
                     tempcirclesize = [];
                     groupswithin = [];
-                    circletexts = [];
+                    //circletexts = [];
 
                     // click info
                     console.log('######')
-                    console.log("COUNTFAMILIES: " + countFamilies(String(selectedgroup[selectedgroup.length-1]) ,0));
+                    console.log("COUNTFAMILIES: " + countFamilies(String(selectedgroup[selectedgroup.length-1]), 0));
                     console.log("COUNTGROUPS: " + countGroups(String(selectedgroup[selectedgroup.length-1])));
 
                     // prep circles
-                    circletexts = findGroups(String(selectedgroup[selectedgroup.length-1]));
+                    //circletexts = findGroups(String(selectedgroup[selectedgroup.length-1]));
                     groupswithin = findGroups(String(selectedgroup[selectedgroup.length-1]));
                     console.log("GROUPSWITHIN: " + groupswithin) // object, items are string
                     for (i in groupswithin) {
@@ -763,7 +763,7 @@
                     var lowest = Math.min.apply(Math, tempcirclesize);
                     var scale = highest + Math.abs(lowest);
                     tempcirclesize.forEach(function(item,index){
-                        var realsize = item * 200 / scale// / (tempcirclesize.length*2);
+                        var realsize = item * 200 / scale // / (tempcirclesize.length*2);
                         circlesize.push(realsize);
                     });
                     console.log('-----------')
@@ -896,11 +896,9 @@
                                                     if (superfamkey == group) {
                                                         beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey].forEach(family => {
                                                             //console.log('family: ' + family);
-                                                            //document.write(family + '<br />');
+                                                            //console.log(family + '<br />');
                                                             result += 1;
                                                         });
-                                                    } else {
-                                                        result = 1;
                                                     }
                                                 });
                                             }
