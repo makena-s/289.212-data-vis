@@ -1,0 +1,1058 @@
+<!-- for more, check out https://github.com/CodingTrain/p5-matter -->
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>beetle test</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.14.2/matter.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="stylesheet.css">
+
+        <!-- js tree -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.10/jstree.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/themes/default/style.min.css"/>
+    </head>
+
+    <body class="unselectable">
+
+        <img hidden src="scarabsmall.png" id="scarabicon" width="50">
+        <h1 id="h1Button" class="unselectable">BEETLE FAMILY TREE</h1>
+        <!--<button id="addCircle" class="unselectable">add circle</button>-->
+        <!--<button id="bumpCircle" class="unselectable">bump circle</button>-->
+        <!--<br>-->
+
+        <p class="unselectable">BEETLE CLASSIFICATIONS</p>
+
+        <div style="color: crimson; display: inline;">order ></div>
+        <div style="color: coral; display: inline;">suborder ></div>
+        <div style="color: gold; display: inline;">infraorder ></div>
+        <div style="color: forestgreen; display: inline;">clade ></div>
+        <div style="color: royalblue; display: inline;">superfamily</div>
+
+        <p class="unselectable">BEETLE DATA</p>
+
+        <!--
+<button onclick="showHide()">order-Coleoptera</button>
+<p id="cooldiv" style = "display: none">
+<button onclick="showHide()">suborder-Protocoleoptera</button>
+</p>
+-->
+
+        <!-- tree menu -->
+        <div id="jstree" class="unselectable">
+            <ul>
+                <li id="order-Coleoptera">
+                    order-Coleoptera
+                    <ul>
+                        <li id="suborder-Protocoleoptera">
+                            suborder-Protocoleoptera
+                            <ul>
+                                <li id="infraorder-None1">
+                                    infraorder-None1
+                                    <ul>
+                                        <li id="clade-None1">
+                                            clade-None1
+                                            <ul>
+                                                <li id="superfamily-Tshekardocoleoidea">
+                                                    superfamily-Tshekardocoleoidea
+                                                    <ul>
+                                                        <li>family: Tshekardocoleidae</li>
+                                                        <li>family: Labradorocoleidae</li>
+                                                        <li>family: Oborocoleidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Permocupedoidea">
+                                                    superfamily-Permocupedoidea
+                                                    <ul>
+                                                        <li>family: Permocupedidae</li>
+                                                        <li>family: Taldycupedida</li>
+                                                        <li>family: Ademosynidae</li>
+                                                        <li>family: Permosynidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="suborder-Archostemata">
+                            suborder-Archostemata
+                            <ul>
+                                <li id="infraorder-None2">
+                                    infraorder-None2
+                                    <ul>
+                                        <li id="clade-None2">
+                                            clade-None2
+                                            <ul>
+                                                <li id="superfamily-None1">
+                                                    superfamily-None1
+                                                    <ul>
+                                                        <li>family: Crowsoniellidae</li>
+                                                        <li>family: Cupedidae</li>
+                                                        <li>family: Micromalthidae</li>
+                                                        <li>family: Ommatidae</li>
+                                                        <li>family: Jurodidae</li>
+                                                        <li>family: Triadocupedidae</li>
+                                                        <li>family: Magnocoleidae</li>
+                                                        <li>family: Obrieniidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="suborder-Myxophaga">
+                            suborder-Myxophaga
+                            <ul>
+                                <li id="infraorder-None3">
+                                    infraorder-None3
+                                    <ul>
+                                        <li id="clade-None3">
+                                            clade-None3
+                                            <ul>
+                                                <li id="superfamily-Asiocoleoidea">
+                                                    superfamily-Asiocoleoidea
+                                                    <ul>
+                                                        <li>family: Asiocoleidae</li>
+                                                        <li>family: Tricoleidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Rhombocoleoidea">
+                                                    superfamily-Rhombocoleoidea
+                                                    <ul>
+                                                        <li>family: Rhombocoleidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Schizophoroidea">
+                                                    superfamily-Schizophoroidea
+                                                    <ul>
+                                                        <li>family: Schizophoridae</li>
+                                                        <li>family: Catiniidae</li>
+                                                        <li>family: Schizocoleidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Lepiceroidea">
+                                                    superfamily-Lepiceroidea
+                                                    <ul>
+                                                        <li>family: Lepiceridae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Sphaeriusoidea">
+                                                    superfamily-Sphaeriusoidea
+                                                    <ul>
+                                                        <li>family: Torridincolidae</li>
+                                                        <li>family: Hydroscaphidae</li>
+                                                        <li>family: Sphaeriusidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="suborder-Adephaga">
+                            suborder-Adephaga
+                            <ul>
+                                <li id="infraorder-None4">
+                                    infraorder-None4
+                                    <ul>
+                                        <li id="clade-None4">
+                                            clade-None4
+                                            <ul>
+                                                <li id="superfamily-None2">
+                                                    superfamily-None2
+                                                    <ul>
+                                                        <li>family: Tritarsidae</li>
+                                                        <li>family: Gyrinidae</li>
+                                                        <li>family: Trachypachidae</li>
+                                                        <li>family: Rhysodidae</li>
+                                                        <li>family: Carabidae</li>
+                                                        <li>family: Haliplidae</li>
+                                                        <li>family: Triaplidae</li>
+                                                        <li>family: Colymbotethidae</li>
+                                                        <li>family: Parahygrobiidae</li>
+                                                        <li>family: Coptoclavidae</li>
+                                                        <li>family: Liadytidae</li>
+                                                        <li>family: Meruidae</li>
+                                                        <li>family: Noteridae</li>
+                                                        <li>family: Amphizoidae</li>
+                                                        <li>family: Aspidytidae</li>
+                                                        <li>family: Hygrobiidae</li>
+                                                        <li>family: Dytiscidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="suborder-Polyphaga">
+                            suborder-Polyphaga
+                            <ul>
+                                <li id="infraorder-Staphyliniformia">
+                                    infraorder-Staphyliniformia
+                                    <ul>
+                                        <li id="clade-None5">
+                                            clade-None5
+                                            <ul>
+                                                <li id="superfamily-Hydrophiloidea">
+                                                    superfamily-Hydrophiloidea
+                                                    <ul>
+                                                        <li>family: Hydrophilidae</li>
+                                                        <li>family: Sphaeritidae</li>
+                                                        <li>family: Synteliidae</li>
+                                                        <li>family: Histeridae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Staphylinoidea">
+                                                    superfamily-Staphylinoidea
+                                                    <ul>
+                                                        <li>family: Hydraenidae</li>
+                                                        <li>family: Ptiliidae</li>
+                                                        <li>family: Agyrtidae</li>
+                                                        <li>family: Leiodidae</li>
+                                                        <li>family: Silphidae</li>
+                                                        <li>family: Staphylinidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="infraorder-Scarabaeiformia">
+                                    infraorder-Scarabaeiformia
+                                    <ul>
+                                        <li id="clade-None6">
+                                            clade-None6
+                                            <ul>
+                                                <li id="superfamily-Scarabaeoidea">
+                                                    superfamily-Scarabaeoidea
+                                                    <ul>
+                                                        <li>family: Pleocomidae</li>
+                                                        <li>family: Geotrupidae</li>
+                                                        <li>family: Belohinidae</li>
+                                                        <li>family: Passalidae</li>
+                                                        <li>family: Trogidae</li>
+                                                        <li>family: Glaresidae</li>
+                                                        <li>family: Diphyllostomatidae</li>
+                                                        <li>family: Lucanidae</li>
+                                                        <li>family: Ochodaeidae</li>
+                                                        <li>family: Hybosoridae</li>
+                                                        <li>family: Glaphyridae</li>
+                                                        <li>family: Scarabaeidae</li>
+                                                        <li>family: Coprinisphaeridae</li>
+                                                        <li>family: Pallichnidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="infraorder-Elateriformia">
+                                    infraorder-Elateriformia
+                                    <ul>
+                                        <li id="clade-None7">
+                                            clade-None7
+                                            <ul>
+                                                <li id="superfamily-Scirtoidea">
+                                                    superfamily-Scirtoidea
+                                                    <ul>
+                                                        <li>family: Decliniidae</li>
+                                                        <li>family: Eucinetidae</li>
+                                                        <li>family: Clambidae</li>
+                                                        <li>family: Scirtidae</li>
+                                                        <li>family: Elodophthalmidae</li>
+                                                        <li>family: Mesocinetidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Dascilloidea">
+                                                    superfamily-Dascilloidea
+                                                    <ul>
+                                                        <li>family: Dascillidae</li>
+                                                        <li>family: Rhipiceridae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Buprestoidea">
+                                                    superfamily-Buprestoidea
+                                                    <ul>
+                                                        <li>family: Schizopodidae</li>
+                                                        <li>family: Buprestidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Byrrhoidea">
+                                                    superfamily-Byrrhoidea
+                                                    <ul>
+                                                        <li>family: Byrrhidae</li>
+                                                        <li>family: Elmidae</li>
+                                                        <li>family: Dryopidae</li>
+                                                        <li>family: Lutrochidae</li>
+                                                        <li>family: Limnichidae</li>
+                                                        <li>family: Heteroceridae</li>
+                                                        <li>family: Psephenidae</li>
+                                                        <li>family: Cneoglossidae</li>
+                                                        <li>family: Ptilodactylidae</li>
+                                                        <li>family: Podabrocephalidae</li>
+                                                        <li>family: Chelonariidae</li>
+                                                        <li>family: Eulichadidae</li>
+                                                        <li>family: Callirhipidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Elateroidea">
+                                                    superfamily-Elateroidea
+                                                    <ul>
+                                                        <li>family: Artematopodidae</li>
+                                                        <li>family: Brachypsectridae</li>
+                                                        <li>family: Cantharidae</li>
+                                                        <li>family: Cerophytidae</li>
+                                                        <li>family: Elateridae</li>
+                                                        <li>family: Eucnemidae</li>
+                                                        <li>family: Lampyridae</li>
+                                                        <li>family: Lycidae</li>
+                                                        <li>family: Omethidae</li>
+                                                        <li>family: Phengodidae</li>
+                                                        <li>family: Rhagophthalmidae</li>
+                                                        <li>family: Sinopyrophoridae</li>
+                                                        <li>family: Throscidae</li>
+                                                        <li>family: Berendtimiridae</li>
+                                                        <li>family: Praelateriidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Rhinorhipoidea">
+                                                    superfamily-Rhinorhipoidea
+                                                    <ul>
+                                                        <li>family: Rhinorhipidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="infraorder-Bostrichiformia">
+                                    infraorder-Bostrichiformia
+                                    <ul>
+                                        <li id="clade-None8">
+                                            clade-None8
+                                            <ul>
+                                                <li id="superfamily-Derodontoidea">
+                                                    superfamily-Derodontoidea
+                                                    <ul>
+                                                        <li>family: Derodontidae</li>
+                                                        <li>family: Nosodendridae</li>
+                                                        <li>family: Jacobsoniidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Bostrichoidea">
+                                                    superfamily-Bostrichoidea
+                                                    <ul>
+                                                        <li>family: Dermestidae</li>
+                                                        <li>family: Endecatomidae</li>
+                                                        <li>family: Bostrichidae</li>
+                                                        <li>family: Ptinidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="infraorder-Cucujiformia">
+                                    infraorder-Cucujiformia
+                                    <ul>
+                                        <li id="clade-None9">
+                                            clade-None9
+                                            <ul>
+                                                <li id="superfamily-Lymexyloidea">
+                                                    superfamily-Lymexyloidea
+                                                    <ul>
+                                                        <li>family: Lymexylidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Cleroidea">
+                                                    superfamily-Cleroidea
+                                                    <ul>
+                                                        <li>family: Phloiophilidae</li>
+                                                        <li>family: Trogossitidae</li>
+                                                        <li>family: Chaetosomatidae</li>
+                                                        <li>family: Metaxinidae</li>
+                                                        <li>family: Thanerocleridae</li>
+                                                        <li>family: Cleridae</li>
+                                                        <li>family: Acanthocnemidae</li>
+                                                        <li>family: Phycosecidae</li>
+                                                        <li>family: Prionoceridae</li>
+                                                        <li>family: Mauroniscidae</li>
+                                                        <li>family: Melyridae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Cucujoidea">
+                                                    superfamily-Cucujoidea
+                                                    <ul>
+                                                        <li>family: Parandrexidae</li>
+                                                        <li>family: Sinisilvanidae</li>
+                                                        <li>family: Boganiidae</li>
+                                                        <li>family: Byturidae</li>
+                                                        <li>family: Helotidae</li>
+                                                        <li>family: Protocucujidae</li>
+                                                        <li>family: Sphindidae</li>
+                                                        <li>family: Biphyllidae</li>
+                                                        <li>family: Erotylidae</li>
+                                                        <li>family: Monotomidae</li>
+                                                        <li>family: Hobartiidae</li>
+                                                        <li>family: Cryptophagidae</li>
+                                                        <li>family: Agapythidae</li>
+                                                        <li>family: Priasilphidae</li>
+                                                        <li>family: Phloeostichidae</li>
+                                                        <li>family: Silvanidae</li>
+                                                        <li>family: Cucujidae</li>
+                                                        <li>family: Myraboliidae</li>
+                                                        <li>family: Cavognathidae</li>
+                                                        <li>family: Lamingtoniidae</li>
+                                                        <li>family: Passandridae</li>
+                                                        <li>family: Phalacridae</li>
+                                                        <li>family: Propalticidae</li>
+                                                        <li>family: Laemophloeidae</li>
+                                                        <li>family: Tasmosalpingidae</li>
+                                                        <li>family: Cyclaxyridae</li>
+                                                        <li>family: Kateretidae</li>
+                                                        <li>family: Nitidulidae</li>
+                                                        <li>family: Smicripidae</li>
+                                                        <li>family: Bothrideridae</li>
+                                                        <li>family: Cerylonidae</li>
+                                                        <li>family: Alexiidae</li>
+                                                        <li>family: Discolomatidae</li>
+                                                        <li>family: Endomychidae</li>
+                                                        <li>family: Coccinellidae</li>
+                                                        <li>family: Corylophidae</li>
+                                                        <li>family: Akalyptoischiidae</li>
+                                                        <li>family: Latridiidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Tenebrionoidea">
+                                                    superfamily-Tenebrionoidea
+                                                    <ul>
+                                                        <li>family: Mycetophagidae</li>
+                                                        <li>family: Archeocrypticidae</li>
+                                                        <li>family: Pterogeniidae</li>
+                                                        <li>family: Ciidae</li>
+                                                        <li>family: Tetratomidae</li>
+                                                        <li>family: Melandryidae</li>
+                                                        <li>family: Mordellidae</li>
+                                                        <li>family: Ripiphoridae</li>
+                                                        <li>family: Zopheridae</li>
+                                                        <li>family: Ulodidae</li>
+                                                        <li>family: Promecheilidae</li>
+                                                        <li>family: Chalcodryidae</li>
+                                                        <li>family: Trachelostenidae</li>
+                                                        <li>family: Tenebrionidae</li>
+                                                        <li>family: Prostomidae</li>
+                                                        <li>family: Synchroidae</li>
+                                                        <li>family: Stenotrachelidae</li>
+                                                        <li>family: Oedemeridae</li>
+                                                        <li>family: Meloidae</li>
+                                                        <li>family: Mycteridae</li>
+                                                        <li>family: Boridae</li>
+                                                        <li>family: Trictenotomidae</li>
+                                                        <li>family: Pythidae</li>
+                                                        <li>family: Pyrochroidae</li>
+                                                        <li>family: Salpingidae</li>
+                                                        <li>family: Anthicidae</li>
+                                                        <li>family: Aderidae</li>
+                                                        <li>family: Scraptiidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li id="clade-Phytophaga">
+                                            clade-Phytophaga
+                                            <ul>
+                                                <li id="superfamily-Chrysomeloidea">
+                                                    superfamily-Chrysomeloidea
+                                                    <ul>
+                                                        <li>family: Oxypeltidae</li>
+                                                        <li>family: Vesperidae</li>
+                                                        <li>family: Disteniidae</li>
+                                                        <li>family: Cerambycidae</li>
+                                                        <li>family: Megalopodidae</li>
+                                                        <li>family: Orsodacnidae</li>
+                                                        <li>family: Chrysomelidae</li>
+                                                    </ul>
+                                                </li>
+                                                <li id="superfamily-Curculionoidea">
+                                                    superfamily-Curculionoidea
+                                                    <ul>
+                                                        <li>family: Nemonychidae</li>
+                                                        <li>family: Anthribidae</li>
+                                                        <li>family: Ulyanidae</li>
+                                                        <li>family: Belidae</li>
+                                                        <li>family: Caridae</li>
+                                                        <li>family: Attelabidae</li>
+                                                        <li>family: Brentidae</li>
+                                                        <li>family: Dryophthoridae</li>
+                                                        <li>family: Brachyceridae</li>
+                                                        <li>family: Curculionidae</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <script>
+            // BEETLEDATA JSON COPIED HERE
+            // newest version
+            beetledata = {
+                "order-Coleoptera": {
+                    "suborder-Protocoleoptera": {
+                        "infraorder-None1": {
+                            "clade-None1": {
+                                "superfamily-Tshekardocoleoidea": ["Tshekardocoleidae", "Labradorocoleidae", "Oborocoleidae"],
+                                "superfamily-Permocupedoidea": ["Permocupedidae", "Taldycupedida", "Ademosynidae", "Permosynidae"]
+                            }
+                        }
+                    },
+                    "suborder-Archostemata": {
+                        "infraorder-None2": {
+                            "clade-None2": {
+                                "superfamily-None1": ["Crowsoniellidae", "Cupedidae", "Micromalthidae", "Ommatidae", "Jurodidae", "Triadocupedidae", "Magnocoleidae", "Obrieniidae"]
+                            }
+                        }
+                    },
+                    "suborder-Myxophaga": {
+                        "infraorder-None3": {
+                            "clade-None3": {
+                                "superfamily-Asiocoleoidea": ["Asiocoleidae", "Tricoleidae"],
+                                "superfamily-Rhombocoleoidea": ["Rhombocoleidae"],
+                                "superfamily-Schizophoroidea": ["Schizophoridae", "Catiniidae", "Schizocoleidae"],
+                                "superfamily-Lepiceroidea": ["Lepiceridae"],
+                                "superfamily-Sphaeriusoidea": ["Torridincolidae", "Hydroscaphidae", "Sphaeriusidae"],
+                            }
+                        }
+                    },
+                    "suborder-Adephaga": {
+                        "infraorder-None4": {
+                            "clade-None4": {
+                                "superfamily-None2": ["Tritarsidae", "Gyrinidae", "Trachypachidae", "Rhysodidae", "Carabidae", "Haliplidae", "Triaplidae", "Colymbotethidae", "Parahygrobiidae", "Coptoclavidae", "Liadytidae", "Meruidae", "Noteridae", "Amphizoidae", "Aspidytidae", "Hygrobiidae", "Dytiscidae"]
+                            }
+                        }
+                    },
+                    "suborder-Polyphaga": {
+                        "infraorder-Staphyliniformia": {
+                            "clade-None5": {
+                                "superfamily-Hydrophiloidea": ["Hydrophilidae", "Sphaeritidae", "Synteliidae", "Histeridae"],
+                                "superfamily-Staphylinoidea": ["Hydraenidae", "Ptiliidae", "Agyrtidae", "Leiodidae", "Silphidae", "Staphylinidae"]
+                            }
+                        },
+                        "infraorder-Scarabaeiformia": {
+                            "clade-None6": {
+                                "superfamily-Scarabaeoidea": ["Pleocomidae", "Geotrupidae", "Belohinidae", "Passalidae", "Trogidae", "Glaresidae", "Diphyllostomatidae", "Lucanidae", "Ochodaeidae", "Hybosoridae", "Glaphyridae", "Scarabaeidae", "Coprinisphaeridae", "Pallichnidae"],
+                            }
+                        },
+                        "infraorder-Elateriformia": {
+                            "clade-None7": {
+                                "superfamily-Scirtoidea": ["Decliniidae", "Eucinetidae", "Clambidae", "Scirtidae", "Elodophthalmidae", "Mesocinetidae"],
+                                "superfamily-Dascilloidea": ["Dascillidae", "Rhipiceridae"],
+                                "superfamily-Buprestoidea": ["Schizopodidae", "Buprestidae"],
+                                "superfamily-Byrrhoidea": ["Byrrhidae", "Elmidae", "Dryopidae", "Lutrochidae", "Limnichidae", "Heteroceridae", "Psephenidae", "Cneoglossidae", "Ptilodactylidae", "Podabrocephalidae", "Chelonariidae", "Eulichadidae", "Callirhipidae"],
+                                "superfamily-Elateroidea": ["Artematopodidae", "Brachypsectridae", "Cantharidae", "Cerophytidae", "Elateridae", "Eucnemidae", "Lampyridae", "Lycidae", "Omethidae", "Phengodidae", "Rhagophthalmidae", "Sinopyrophoridae", "Throscidae", "Berendtimiridae", "Praelateriidae"],
+                                "superfamily-Rhinorhipoidea": ["Rhinorhipidae"]
+                            }
+                        },
+                        "infraorder-Bostrichiformia": {
+                            "clade-None8": {
+                                "superfamily-Derodontoidea": ["Derodontidae", "Nosodendridae", "Jacobsoniidae"],
+                                "superfamily-Bostrichoidea": ["Dermestidae", "Endecatomidae", "Bostrichidae", "Ptinidae"]
+                            }
+                        },
+                        "infraorder-Cucujiformia": {
+                            "clade-None9": {
+                                "superfamily-Lymexyloidea": ["Lymexylidae"],
+                                "superfamily-Cleroidea": ["Phloiophilidae", "Trogossitidae", "Chaetosomatidae", "Metaxinidae", "Thanerocleridae", "Cleridae", "Acanthocnemidae", "Phycosecidae", "Prionoceridae", "Mauroniscidae", "Melyridae"],
+                                "superfamily-Cucujoidea": ["Parandrexidae", "Sinisilvanidae", "Boganiidae", "Byturidae", "Helotidae", "Protocucujidae", "Sphindidae", "Biphyllidae", "Erotylidae", "Monotomidae", "Hobartiidae", "Cryptophagidae", "Agapythidae", "Priasilphidae", "Phloeostichidae", "Silvanidae", "Cucujidae", "Myraboliidae", "Cavognathidae", "Lamingtoniidae", "Passandridae", "Phalacridae", "Propalticidae", "Laemophloeidae", "Tasmosalpingidae", "Cyclaxyridae", "Kateretidae", "Nitidulidae", "Smicripidae", "Bothrideridae", "Cerylonidae", "Alexiidae", "Discolomatidae", "Endomychidae", "Coccinellidae", "Corylophidae", "Akalyptoischiidae", "Latridiidae"],
+                                "superfamily-Tenebrionoidea": ["Mycetophagidae", "Archeocrypticidae", "Pterogeniidae", "Ciidae", "Tetratomidae", "Melandryidae", "Mordellidae", "Ripiphoridae", "Zopheridae", "Ulodidae", "Promecheilidae", "Chalcodryidae", "Trachelostenidae", "Tenebrionidae", "Prostomidae", "Synchroidae", "Stenotrachelidae", "Oedemeridae", "Meloidae", "Mycteridae", "Boridae", "Trictenotomidae", "Pythidae", "Pyrochroidae", "Salpingidae", "Anthicidae", "Aderidae", "Scraptiidae"]
+                            },
+                            "clade-Phytophaga": {
+                                "superfamily-Chrysomeloidea": ["Oxypeltidae", "Vesperidae", "Disteniidae", "Cerambycidae", "Megalopodidae", "Orsodacnidae", "Chrysomelidae"],
+                                "superfamily-Curculionoidea": ["Nemonychidae", "Anthribidae", "Ulyanidae", "Belidae", "Caridae", "Attelabidae", "Brentidae", "Dryophthoridae", "Brachyceridae", "Curculionidae"]
+                            }
+                        }
+                    }
+                }
+            }
+            //document.getElementById("jstree").innerHTML = tree(beetledata);
+
+            // module aliases
+            let Engine = Matter.Engine;
+            // let Render = Matter.Render;
+            let World = Matter.World;
+            let Bodies = Matter.Bodies;
+            Constraint = Matter.Constraint,
+                Mouse = Matter.Mouse,
+                MouseConstraint = Matter.MouseConstraint;
+
+            let engine, ground, circles, world;
+
+            var mConstraint;
+
+            function setup() {
+                // setup
+                canvaswidth = screen.height/1;
+                canvasheight = screen.height/1.4;
+                background(0);
+                var canvas = createCanvas(canvaswidth, canvasheight);
+                canvas.position(screen.width-(canvaswidth*1.05), (canvaswidth*.05));
+                //canvas.position(canvaswidth-100, (canvaswidth*.05));
+                strokeWeight(0);
+                circlesize = [];
+
+                // create an engine
+                engine = Engine.create();
+                world = engine.world;
+
+                // create ground and shapes
+                ground = [
+                    Bodies.rectangle(canvaswidth/2, -25, canvaswidth, 50, {isStatic:true}),
+                    Bodies.rectangle(canvaswidth/2, canvasheight+25, canvaswidth, 50, {isStatic:true}),
+                    Bodies.rectangle(-25, canvasheight/2, 50, canvasheight, {isStatic:true}),
+                    Bodies.rectangle(canvaswidth+25, canvasheight/2, 50, canvasheight, {isStatic:true})
+                ]
+
+                circlesize = [100]
+
+                circles = [
+                    Bodies.circle(canvaswidth/2,100,circlesize[0]),
+                ]
+
+                circletexts = ['beetle time!'];
+                writing = 'select a group to start :^)'
+                circlecolor = "slategray"
+
+                // add all of the bodies to the world
+                World.add(
+                    engine.world, [
+                        circles[0],
+                        ground[0],
+                        ground[1],
+                        ground[2],
+                        ground[3]
+                    ]
+                );
+
+                var canvasmouse = Mouse.create(canvas.elt);
+                canvasmouse.pixelRatio = pixelDensity();
+                var options = {
+                    mouse: canvasmouse
+                };
+                mConstraint = MouseConstraint.create(engine, options);
+                World.add(world, mConstraint);
+                console.log(mConstraint);
+
+                // run the engine
+                Engine.run(engine)
+            }
+
+            function draw() {  
+                background(0);
+                fill(255,255,255);
+
+                // caption
+                // from text.html
+                var drawing = document.getElementById("defaultCanvas0");
+                var con = drawing.getContext("2d");
+                con.font = "20pt courier";
+                con.fillText(writing, 20, 40);
+                con.font = "13pt courier";
+
+                // circles
+                for (let i=0; i<circles.length; i++){
+                    fill(circlecolor)
+                    //fill(100,100,255);
+                    shapevertices = circles[i].vertices;
+                    // center = circles[i].vertices.centre;
+                    beginShape();
+                    for (let j=0; j<shapevertices.length; j++) {
+                        vertex(shapevertices[j].x, shapevertices[j].y);
+                    }
+                    endShape(CLOSE);
+                }
+
+                // circle text
+                for (let i=0; i<circles.length; i++){
+                    shapevertices = circles[i].vertices;
+                    fill(255,255,255);
+                    ellipse(shapevertices[0]['x'], shapevertices[0]['y'],10, 10);
+                    text = circletexts[i]
+                    con.fillText(text, shapevertices[0]['x']+10, shapevertices[0]['y']);
+                }
+
+                // ground vertices
+                for (let i=0; i<ground.length; i++){
+                    shapevertices = ground[i].vertices;
+                    beginShape();
+                    fill(127);
+                    for (let j=0; j<shapevertices.length; j++) {
+                        vertex(shapevertices[j].x, shapevertices[j].y);
+                    }
+                    endShape(CLOSE);
+                }
+
+                // click marker
+                if (mConstraint.body) {
+                    var pos = mConstraint.body.position;
+                    var offset = mConstraint.constraint.pointB;
+                    var m = mConstraint.mouse.position;
+                    //stroke(0, 255, 0);
+                    //line(pos.x + offset.x, pos.y + offset.y, m.x, m.y);
+                    fill(0,0,255)
+                    //ellipse(pos.x + offset.x, pos.y + offset.y, 20,20)
+                    print('clicked')
+
+                    var scarabicon = document.getElementById("scarabicon");
+                    con.drawImage(scarabicon, pos.x + offset.x, pos.y + offset.y);    
+                }
+            } // END DRAW FUNCTION
+
+
+            // START FUNCTIONS AND EVENTLISTENERS
+
+
+            // START TREE SCRIPT 
+
+            var currentgroup;
+
+            // list displays normally when in a non jstree div, so there's a problem with this
+
+            $(function () {
+                selectedgroup = [];
+                currentgroup = String(selectedgroup[selectedgroup.length-1])
+
+                // 6 create an instance when the DOM is ready
+                $('#jstree').jstree();
+
+                // 7 bind to events triggered on the tree
+                $('#jstree').on("changed.jstree", function (e, data) {
+                    selectedgroup.push(data.selected) // item's id
+
+                    // clear old circles and reset
+                    Matter.World.remove(world, circles)
+                    circles = [];
+                    circlesize = [];
+                    tempcirclesize = [];
+                    groupswithin = [];
+                    circletexts = [];
+                    writing = String(selectedgroup[selectedgroup.length-1])
+                    if (writing.includes('j1_')) {
+                        writing = "end of tree :^)"
+                    }
+
+                    // click info
+                    console.log('######')
+                    console.log("COUNTFAMILIES: " + countFamilies(String(selectedgroup[selectedgroup.length-1]), 0));
+                    console.log("COUNTGROUPS: " + countGroups(String(selectedgroup[selectedgroup.length-1])));
+
+                    // prep circles
+                    circlecolor = findCircleColor(String(selectedgroup[selectedgroup.length-1]))
+                    console.log("CIRCLECOLOR: " + circlecolor)
+                    groupswithin = findGroups(String(selectedgroup[selectedgroup.length-1]));
+                    console.log("GROUPSWITHIN: " + groupswithin) // object, items are string
+                    for (i in groupswithin) {
+                        //console.log('I: ' + i) // i is number
+                        tempcirclesize.push(countFamilies(groupswithin[i], 0));
+                        //console.log("tempcirclesizepush i: " + countFamilies(groupswithin[i], 0))
+                        circletexts.push(groupswithin[i])
+                        //console.log("groupswithin i: " + groupswithin[i])
+                    }
+                    //console.log('circletexts: ' + circletexts)
+                    var highest = Math.max.apply(Math, tempcirclesize);
+                    var lowest = Math.min.apply(Math, tempcirclesize);
+                    var scale = highest + Math.abs(lowest);
+                    tempcirclesize.forEach(function(item,index){
+                        var realsize = item * 200 / scale // / (tempcirclesize.length*2);
+                        circlesize.push(realsize);
+                    });
+                    console.log('-----------')
+                    console.log('TEMPCIRCLESIZE: ' + tempcirclesize)
+                    console.log("CIRCLESIZE: " + circlesize)
+                    console.log("SELECTED GROUP: " + selectedgroup[selectedgroup.length-1])
+
+                    // draw circles
+                    for (i=0; i<countGroups(String(selectedgroup[selectedgroup.length-1])); i++) {
+                        circles.push(Bodies.circle(canvaswidth/2,100,circlesize[i])); // error with circlesize[i], it's running the correct number of times though
+                        World.add(engine.world, circles[circles.length-1]);
+                        //print('circle add')
+                        //print(circlesize[circlesize.length-1])
+                    }
+                });
+
+                // 8 interact with the tree - either way is OK
+                $('button').on('click', function () {
+                    $('#jstree').jstree(true).select_node('child_node_1');
+                    $('#jstree').jstree('select_node', 'child_node_1');
+                    $.jstree.reference('#jstree').select_node('child_node_1');
+                });
+            });
+
+            // END TREE SCRIPT
+
+            // CONVERT JSON TO HTML LIST JQUERY VERSION
+            function tree(data) {
+                if (typeof(data) == 'object') {     
+                    var ul = $('<ul>');
+                    for (var i in data) {            
+                        ul.append($('<li>').text(i).append(tree(data[i])));         
+                    }        
+                    return ul;
+                } else {       
+                    var textNode = document.createTextNode(' => ' + data);
+                    return textNode;
+                }
+
+                $(document.body).append(tree(data));
+            }
+
+            // add circle button
+            //            document.getElementById('addCircle').addEventListener('click', () => {
+            //                circlesize.push(Math.random()*100);
+            //                circles.push(Bodies.circle(canvaswidth/2,100,circlesize[circlesize.length-1]));
+            //                World.add(engine.world, circles[circles.length-1]);
+            //                print('circle add')
+            //                print(circlesize[circlesize.length-1])
+            //            })
+
+            // bump circle button
+            //            document.getElementById('bumpCircle').addEventListener('click', () => {
+            //                for (let j=0; j<circles.length; j++){
+            //                    Matter.Body.applyForce(circles[j], {x:circles[j].position.x-5, y:circles[j].position.y}, {x:0, y:-0.1});
+            //                }
+            //                print('circle bump')
+            //            })
+
+            // click header
+            document.getElementById('h1Button').addEventListener('click', () => {
+                print('header clicked')
+            })
+
+            // click subtitle
+            //            document.getElementById("demo").addEventListener("mouseup", mouseUp);
+            //            function mouseUp() {
+            //                document.getElementById("demo").innerHTML = "BEETLE DATA :^)";
+            //            }
+
+            function showHide() {
+                var x = document.getElementById("cooldiv");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+            }
+
+            // START COUNTFAMILIES FUNCTION
+            function countFamilies(group, totalcount) {
+                result = totalcount;
+
+                Object.keys(beetledata).forEach(orderkey => {
+                    // check orders
+                    if (orderkey == group) {
+                        Object.keys(beetledata[orderkey]).forEach(suborderkey => {
+                            countFamilies(suborderkey, result)
+                        });
+                    } else {
+                        Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
+                            // check suborders
+                            if (suborderkey == group) {
+                                Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
+                                    countFamilies(infrakey, result)
+                                    //console.log("RESULT: " + result)
+                                });
+                            } else {
+                                Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
+                                    // check infraorders
+                                    if (infrakey == group) {
+                                        Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
+                                            countFamilies(cladekey, result)
+                                        });
+                                    } else {
+                                        Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
+                                            // check clades
+                                            if (cladekey == group) {
+                                                Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
+                                                    countFamilies(superfamkey, result)
+                                                });
+                                            } else {
+                                                Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
+                                                    // check superfamilies
+                                                    if (superfamkey == group) {
+                                                        beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey].forEach(famvalue => {
+                                                            //console.log('family: ' + family);
+                                                            //console.log(family + '<br />');
+                                                            result += 1;
+                                                        });
+                                                    } else {
+                                                        beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey].forEach(famkey => {
+                                                            // check families
+                                                            if (famkey == group){
+                                                                result = 1;
+                                                            }
+                                                        })
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+                return result;
+            };
+            // END COUNTFAMILIES FUNCTION
+
+            // COUNT GROUPS WITHIN A GROUP
+            function countGroups(group) {
+                result = 0;
+                Object.keys(beetledata).forEach(orderkey => {
+                    // check orders
+                    if (orderkey == group) {
+                        result = Object.keys(beetledata[orderkey]).length;
+                    } else {
+                        Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
+                            // check suborders
+                            if (suborderkey == group) {
+                                result = Object.keys(beetledata[orderkey][suborderkey]).length;
+                            } else {
+                                Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
+                                    // check infraorders
+                                    if (infrakey == group) {
+                                        result = Object.keys(beetledata[orderkey][suborderkey][infrakey]).length;
+                                    } else {
+                                        Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
+                                            // check clades
+                                            if (cladekey == group) {
+                                                result = Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).length;
+                                            } else {
+                                                Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
+                                                    // check superfamilies
+                                                    if (superfamkey == group) {
+                                                        result = Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey]).length;
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        })
+                    }
+                })
+                return result;
+            };
+
+            // NAME GROUPS WITHIN A GROUP
+            function findGroups(group) {
+                children = [];
+                Object.keys(beetledata).forEach(orderkey => {
+                    // check orders
+                    if (orderkey == group) {
+                        Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
+                            children.push(suborderkey);
+                        })
+                    } else {
+                        Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
+                            // check suborders
+                            if (suborderkey == group) {
+                                Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
+                                    children.push(infrakey);
+                                })
+                            } else {
+                                Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
+                                    // check infraorders
+                                    if (infrakey == group) {
+                                        Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
+                                            children.push(cladekey);
+                                        })
+                                    } else {
+                                        Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
+                                            // check clades
+                                            if (cladekey == group) {
+                                                Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
+                                                    children.push(superfamkey);
+                                                })
+                                            } else {
+                                                Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
+                                                    // check superfamilies
+                                                    if (superfamkey == group) {
+                                                        beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey][superfamkey].forEach(famvalue => {
+                                                            children.push(famvalue);
+                                                        })
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        })
+                    }
+                })
+                return children;
+            };
+
+            // FIND COLOR BASED ON TIER
+            function findCircleColor(group) {
+                var result;
+                Object.keys(beetledata).forEach(orderkey => {
+                    // check orders
+                    if (orderkey == group) {
+                        result = "crimson"
+                    } else {
+                        Object.keys(beetledata["order-Coleoptera"]).forEach(suborderkey => {
+                            // check suborders
+                            if (suborderkey == group) {
+                                result = "coral"
+                            } else {
+                                Object.keys(beetledata["order-Coleoptera"][suborderkey]).forEach(infrakey => {
+                                    // check infraorders
+                                    if (infrakey == group) {
+                                        result = "gold"
+                                    } else {
+                                        Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey]).forEach(cladekey => {
+                                            // check clades
+                                            if (cladekey == group) {
+                                                result = "forestgreen"
+                                            } else {
+                                                Object.keys(beetledata["order-Coleoptera"][suborderkey][infrakey][cladekey]).forEach(superfamkey => {
+                                                    // check superfamilies
+                                                    if (superfamkey == group) {
+                                                        result = "royalblue"
+                                                    }
+                                                })
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+                return result;
+            }
+
+            // END FUNCTIONS AND EVENTLISTENERS
+
+        </script>
+
+    </body>
+</html>
